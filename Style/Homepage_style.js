@@ -2,14 +2,14 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
     Title: {
-        fontFamily: 'Inter-Black',
+        fontFamily: 'pBold',
         fontSize: 30,
         margin: 20,
         marginTop: 80,
         color: '#7AA8AE',
     },
     Welcome: {
-        fontFamily: 'Inter-Black',
+        fontFamily: 'pBold',
         marginTop: 20,
         fontSize: 27,
     },
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     Button: {
         color: "#FFFFFF",
         textAlign: "center",
-        fontFamily: 'Inter-Black',
+        fontFamily: 'pMedium',
         fontSize: 20
     },
     Pressable: {

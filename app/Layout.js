@@ -6,18 +6,19 @@ import { useCallback } from "react";
 
 const Layout = () =>{
     const [fontsLoaded] = useFonts({
-        'Inter-Black': require('../src/fonts/pBold.ttf'),
+        'pBold': require('../src/fonts/pBold.ttf'),   //importing the poppins-bold font
+        'pMedium': require('../src/fonts/pMedium.ttf'), //importing the poppins-medium font
       });
     
       const onLayoutRootView = useCallback(async () => {
         if (fontsLoaded) {
-          await SplashScreen.hideAsync();
+          await SplashScreen.hideAsync();     //show a splash screen if font is not loaded
         }
       }, [fontsLoaded]);
     
       if (!fontsLoaded) {
         return null;
       }
-      return(<Home />)
+      return(<Home />) // return the Home component
 }
 export default Layout;
