@@ -3,6 +3,8 @@ import { Text, View } from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback } from "react";
+import Scan from "./Scanpage.js";
+import App from "../App.js";
 
 const Layout = () =>{
     const [fontsLoaded] = useFonts({
@@ -19,6 +21,6 @@ const Layout = () =>{
       if (!fontsLoaded) {
         return null;
       }
-      return(<Home />) // return the Home component
+      return(<Scan />) // return the Home component
 }
 export default Layout;
