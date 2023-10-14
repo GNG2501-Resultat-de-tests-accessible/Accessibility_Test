@@ -5,6 +5,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useCallback } from "react";
 import Scan from "./Scanpage.js";
 import App from "../App.js";
+import Result from "./Resultpage.js";
 
 const Layout = () =>{
     const [fontsLoaded] = useFonts({
@@ -21,6 +22,6 @@ const Layout = () =>{
       if (!fontsLoaded) {
         return null;
       }
-      return(<Scan />) // return the Home component
+      return(<Result />) // return the Home component
 }
 export default Layout;
