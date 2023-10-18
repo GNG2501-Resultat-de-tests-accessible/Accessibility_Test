@@ -25,6 +25,12 @@ const ScanStyle = StyleSheet.create({
     cam_icon :{
         width :50,
         height : 50
+    },
+    Darkmode :{
+        backgroundColor: "#231f26"
+    },
+    Lightmode :{
+        backgroundColor: "#ffffff"
     }
 })
 export default ScanStyle;

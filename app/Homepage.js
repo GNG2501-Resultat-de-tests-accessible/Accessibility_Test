@@ -16,9 +16,11 @@ const Home = () =>{
                 <Text>Click on Start to begin scanning</Text>
                 <Image source ={require('../src/image/homepage_image.png')} style={styles.Imagee}></Image>
             </SafeAreaView>
-            <Pressable style = {styles.Pressable}>
+            <Link href="/Scanpage" style = {styles.Pressable} asChild>
+            <Pressable >
                     <Text style={styles.Button}>start</Text>
             </Pressable>
+            </Link>
         </SafeAreaView>
         
     )

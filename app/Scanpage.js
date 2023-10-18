@@ -1,12 +1,15 @@
 import {Text, SafeAreaView} from "react-native";
 import layout_styles from "../Style/Layoutstyle.js";
-import { Image, Pressable } from "react-native";
+import { Image, Pressable, Appearance, useColorScheme } from "react-native";
 import ScanStyle from "../Style/Scanpage_style.js";
 import styles from "../Style/Homepage_style.js";
 import * as cam_image from '../src/image/homepage_image.png';
+import { Link } from "expo-router";
 
 
 const Scan = ()=>{
+    let colorsheme = useColorScheme();
+    const ContainerTheme = colorsheme ==='light'? ScanStyle.Lightmode : ScanStyle.Darkmode;
     return (
         <SafeAreaView>
             <SafeAreaView style ={ScanStyle.Scanning}>
@@ -15,9 +18,11 @@ const Scan = ()=>{
             <SafeAreaView style={ScanStyle.CamArea}>
             <Image source ={require('../src/image/camera_icon.png')} style={ScanStyle.cam_icon}></Image>
             </SafeAreaView>
+            <Link href="/Resultpage" style = {styles.Pressable} asChild>
             <Pressable style = {styles.Pressable}>
-                    <Text style={styles.Button}>Back</Text>
+                    <Text style={styles.Button}>Scan</Text>
             </Pressable>
+            </Link>
         </SafeAreaView>
     )
 }

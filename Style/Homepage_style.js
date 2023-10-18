@@ -23,13 +23,16 @@ const styles = StyleSheet.create({
         color: "#FFFFFF",
         textAlign: "center",
         fontFamily: 'pMedium',
-        fontSize: 20
+        fontSize: 20,
+        justifyContent : "center",
+        alignItems : "center"
     },
     Pressable: {
         backgroundColor: "#7AA8AE",
         margin:70,
         marginTop: 100,
         borderRadius:8,
+        textAlign : "center",
     }
 
 })

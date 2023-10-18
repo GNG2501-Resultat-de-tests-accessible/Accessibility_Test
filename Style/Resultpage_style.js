@@ -41,6 +41,12 @@ const ResultStyle = StyleSheet.create({
         margin:70,
         marginTop: 100,
         borderRadius:8,
+    },
+    Darkmode :{
+        backgroundColor: "#231f26"
+    },
+    Lightmode :{
+        backgroundColor: "#ffffff"
     }
 
 })
