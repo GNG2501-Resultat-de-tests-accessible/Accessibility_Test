@@ -40,12 +40,14 @@ export default function Scan() {
 		const model = await getModel();
 		const tensor = await convertBase64ToTensor(croppedDate.base64);
 		const prediction = await startPrediction(model, tensor);
+		console.log("prediction", prediction);
 		const highestPrediction = prediction.indexOf(
 			Math.max.apply(null, prediction)
 		);
 		setResult(RESULT_MAPPING[highestPrediction]);
+		console.log("result", RESULT_MAPPING[highestPrediction]);
 	};
-	const [type, setType] = useState(CameraType.front);
+	const [type, setType] = useState(CameraType.back);
 	const [permission, requestPermission] = Camera.useCameraPermissions();
 
 	if (!permission) {
