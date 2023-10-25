@@ -1,3 +1,4 @@
+import React, { useState, useRef } from "react";
 import { Text, SafeAreaView } from "react-native";
 import layout_styles from "../Style/Layoutstyle.js";
 import { Image, Pressable, Appearance, useColorScheme } from "react-native";
@@ -60,12 +61,10 @@ const Scan = () => {
 				/>
 			</SafeAreaView>
 			<Link href='/Resultpage' style={styles.Pressable} asChild>
-				{" "}
-				//make so that if result is positive, it will go to positive result page
-				//and if result is negative, it will go to negative result page on press
-				//of rescan, it will, setIsProcessing(false) and setResult("")
-				<Pressable style={styles.Pressable}>
+				<Pressable
+					style={styles.Pressable}
 					onPress={() => handleImageCapture()}
+				>
 					<Text style={styles.Button}>Scan</Text>
 				</Pressable>
 			</Link>
