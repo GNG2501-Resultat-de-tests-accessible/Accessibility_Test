@@ -1,9 +1,51 @@
 import { Camera, CameraType } from "expo-camera";
-import { useState } from "react";
-import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useState, useRef } from "react";
+import {
+	Button,
+	StyleSheet,
+	Text,
+	TouchableOpacity,
+	View,
+	Image,
+	Pressable,
+	Appearance,
+	useColorScheme,
+} from "react-native";
+import layout_styles from "../Style/Layoutstyle.js";
+import ScanStyle from "../Style/Scanpage_style.js";
+import { Link } from "expo-router";
+
+import {
+	getModel,
+	convertBase64ToTensor,
+	startPrediction,
+} from "../helpers/tensorflow-helper.js";
+import { cropPicture } from "../helpers/image-helper.js";
+const RESULT_MAPPING = ["Positive COVID Test", "Negative COVID Test"];
 
 export default function Scan() {
-	const [type, setType] = useState(CameraType.back);
+	const cameraRef = useRef();
+	const [isProcessing, setIsProcessing] = useState(false);
+	const [result, setResult] = useState("");
+
+	const handleImageCapture = async () => {
+		setIsProcessing(true);
+		const options = { quality: 0.5, base64: true, skipProcessing: true };
+		const imageData = await cameraRef.current.takePictureAsync(options);
+		processImagePrediction(imageData);
+	};
+
+	const processImagePrediction = async (base64Image) => {
+		const croppedDate = await cropPicture(base64Image, 300);
+		const model = await getModel();
+		const tensor = await convertBase64ToTensor(croppedDate.base64);
+		const prediction = await startPrediction(model, tensor);
+		const highestPrediction = prediction.indexOf(
+			Math.max.apply(null, prediction)
+		);
+		setResult(RESULT_MAPPING[highestPrediction]);
+	};
+	const [type, setType] = useState(CameraType.front);
 	const [permission, requestPermission] = Camera.useCameraPermissions();
 
 	if (!permission) {
@@ -23,18 +65,15 @@ export default function Scan() {
 		);
 	}
 
-	function toggleCameraType() {
-		setType((current) =>
-			current === CameraType.back ? CameraType.front : CameraType.back
-		);
-	}
-
 	return (
 		<View style={styles.container}>
-			<Camera style={styles.camera} type={type}>
+			<Camera ref={cameraRef} style={styles.camera} type={type}>
 				<View style={styles.buttonContainer}>
-					<TouchableOpacity style={styles.button} onPress={toggleCameraType}>
-						<Text style={styles.text}>Flip Camera</Text>
+					<TouchableOpacity
+						style={styles.button}
+						onPress={() => handleImageCapture()}
+					>
+						<Text style={styles.text}>Scan</Text>
 					</TouchableOpacity>
 				</View>
 			</Camera>
