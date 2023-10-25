@@ -13,7 +13,7 @@ import {
 	startPrediction,
 } from "../helpers/tensorflow-helper.js";
 import { cropPicture } from "../helpers/image-helper.js";
-import { Camera } from "expo-camera";
+import { Camera, CameraType } from "expo-camera";
 
 const RESULT_MAPPING = ["Positive COVID Test", "Negative COVID Test"];
 
