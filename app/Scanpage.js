@@ -1,74 +1,69 @@
-import React, { useState, useRef } from "react";
-import { Text, SafeAreaView } from "react-native";
-import layout_styles from "../Style/Layoutstyle.js";
-import { Image, Pressable, Appearance, useColorScheme } from "react-native";
-import ScanStyle from "../Style/Scanpage_style.js";
-import styles from "../Style/Homepage_style.js";
-import * as cam_image from "../src/image/homepage_image.png";
-import { Link } from "expo-router";
-
-import {
-	getModel,
-	convertBase64ToTensor,
-	startPrediction,
-} from "../helpers/tensorflow-helper.js";
-import { cropPicture } from "../helpers/image-helper.js";
 import { Camera, CameraType } from "expo-camera";
+import { useState } from "react";
+import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-const RESULT_MAPPING = ["Positive COVID Test", "Negative COVID Test"];
+export default function Scan() {
+	const [type, setType] = useState(CameraType.back);
+	const [permission, requestPermission] = Camera.useCameraPermissions();
 
-const Scan = () => {
-	const cameraRef = useRef();
-	const [isProcessing, setIsProcessing] = useState(false);
-	const [result, setResult] = useState("");
+	if (!permission) {
+		// Camera permissions are still loading
+		return <View />;
+	}
 
-	const handleImageCapture = async () => {
-		setIsProcessing(true);
-		const imageData = await cameraRef.current.takePictureAsync({
-			base64: true,
-		});
-		processImagePrediction(imageData);
-	};
-
-	const processImagePrediction = async (base64Image) => {
-		const croppedDate = await cropPicture(base64Image, 300);
-		const model = await getModel();
-		const tensor = await convertBase64ToTensor(croppedDate.base64);
-
-		const prediction = await startPrediction(model, tensor);
-
-		const highestPrediction = prediction.indexOf(
-			Math.max.apply(null, prediction)
+	if (!permission.granted) {
+		// Camera permissions are not granted yet
+		return (
+			<View style={styles.container}>
+				<Text style={{ textAlign: "center" }}>
+					We need your permission to show the camera
+				</Text>
+				<Button onPress={requestPermission} title='grant permission' />
+			</View>
 		);
-		setResult(RESULT_MAPPING[highestPrediction]);
-	};
+	}
 
-	let colorsheme = useColorScheme();
-	const ContainerTheme =
-		colorsheme === "light" ? ScanStyle.Lightmode : ScanStyle.Darkmode;
+	function toggleCameraType() {
+		setType((current) =>
+			current === CameraType.back ? CameraType.front : CameraType.back
+		);
+	}
+
 	return (
-		<SafeAreaView>
-			<SafeAreaView style={ScanStyle.Scanning}>
-				<Text style={ScanStyle.ScanText}>Scanning</Text>
-			</SafeAreaView>
-			<SafeAreaView style={ScanStyle.CamArea}>
-				<Camera
-					ref={cameraRef}
-					style={ScanStyle.Cam}
-					type={Camera.Constants.Type.back}
-					autoFocus={true}
-					whiteBalance={Camera.Constants.WhiteBalance.auto}
-				/>
-			</SafeAreaView>
-			<Link href='/Resultpage' style={styles.Pressable} asChild>
-				<Pressable
-					style={styles.Pressable}
-					onPress={() => handleImageCapture()}
-				>
-					<Text style={styles.Button}>Scan</Text>
-				</Pressable>
-			</Link>
-		</SafeAreaView>
+		<View style={styles.container}>
+			<Camera style={styles.camera} type={type}>
+				<View style={styles.buttonContainer}>
+					<TouchableOpacity style={styles.button} onPress={toggleCameraType}>
+						<Text style={styles.text}>Flip Camera</Text>
+					</TouchableOpacity>
+				</View>
+			</Camera>
+		</View>
 	);
-};
-export default Scan;
+}
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		justifyContent: "center",
+	},
+	camera: {
+		flex: 1,
+	},
+	buttonContainer: {
+		flex: 1,
+		flexDirection: "row",
+		backgroundColor: "transparent",
+		margin: 64,
+	},
+	button: {
+		flex: 1,
+		alignSelf: "flex-end",
+		alignItems: "center",
+	},
+	text: {
+		fontSize: 24,
+		fontWeight: "bold",
+		color: "white",
+	},
+});
