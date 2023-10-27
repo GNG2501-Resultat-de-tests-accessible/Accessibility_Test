@@ -3,6 +3,8 @@ import styles from "../Style/Homepage_style.js";
 import layout_styles from "../Style/Layoutstyle.js";
 import { Image, Button, Pressable, Appearance, useColorScheme, StatusBar } from "react-native";
 import { Link } from "expo-router";
+import {SlideInDown,FadeInUp } from "react-native-reanimated";
+import Animated from "react-native-reanimated";
 
 const Home = () =>{
     let colorsheme = useColorScheme();
@@ -12,8 +14,8 @@ const Home = () =>{
     // this represents the code of the first page(Home page) of the app
     return(
         <SafeAreaView style = {ContainerTheme}>
-            <StatusBar  backgroundColor= {colorsheme=== 'light'? "fffff": "#231f26"}/>                                                                                  
-            <Text style={styles.Title}>Test Access</Text>
+            <StatusBar  backgroundColor= {colorsheme=== 'light'? "fffff": "#231f26"}/>
+            <Animated.Text style={styles.Title} entering={FadeInUp}>Test Access</Animated.Text>                                                                               
             <SafeAreaView style ={layout_styles.Center}>                
                 <Text style={WelcomTextTheme}>Welcome</Text> 
                 <Text style={IndicationTextTheme}>Click on Start to begin scanning</Text>
