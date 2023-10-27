@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     Imagee: {
         marginTop:80,
         width: 300,
-        height:300
+        height:300,
     },
 
     Button: {
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         fontFamily: 'pMedium',
         fontSize: 20,
         justifyContent : "center",
-        alignItems : "center"
+        alignItems : "center",
     },
     Pressable: {
         backgroundColor: "#7AA8AE",
@@ -33,6 +33,31 @@ const styles = StyleSheet.create({
         marginTop: 100,
         borderRadius:8,
         textAlign : "center",
+    },
+    Darkmode :{
+        backgroundColor: "#231f26",
+        height : "100 %", //for some reason the safeareaview dosn't cover all the screen
+    },
+    Lightmode :{
+        backgroundColor: "#ffffff",
+        height : "100 %",
+    },
+    WelcomeLight : {
+        fontFamily: 'pBold',
+        marginTop: 20,
+        fontSize: 27,
+    },
+    WelcomeDark : {
+        fontFamily: 'pBold',
+        marginTop: 20,
+        fontSize: 27,
+        color : "#ffffff"
+    },
+    ClickonLight :{
+        color : "#000000"
+    },
+    ClickonDark : {
+        color : "#ffffff"
     }
 
 })
