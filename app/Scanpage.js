@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
 	buttonContainer: {
 		flex: 1,
 		flexDirection: "row",
-		backgroundColor: "transparent",
+		backgroundColor: "#7AA8AE",
 		margin: 64,
 	},
 	button: {
