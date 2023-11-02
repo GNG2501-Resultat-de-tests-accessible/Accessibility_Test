@@ -25,11 +25,9 @@ const RESULT_MAPPING = ["Positive COVID Test", "Negative COVID Test"];
 
 export default function Scan() {
 	const cameraRef = useRef();
-	const [isProcessing, setIsProcessing] = useState(false);
 	const [result, setResult] = useState("");
 
 	const handleImageCapture = async () => {
-		setIsProcessing(true);
 		const options = { quality: 0.5, base64: true, skipProcessing: true };
 		const imageData = await cameraRef.current.takePictureAsync(options);
 		processImagePrediction(imageData);
