@@ -4,10 +4,11 @@ import { Image, Pressable, Appearance, useColorScheme } from "react-native";
 import ScanStyle from "../Style/Scanpage_style.js";
 import styles from "../Style/Homepage_style.js";
 import * as cam_image from '../src/image/homepage_image.png';
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 
 
 const Scan = ()=>{
+    router.canGoBack("/Homepage");
     let colorsheme = useColorScheme();
     const ContainerTheme = colorsheme ==='light'? ScanStyle.Lightmode : ScanStyle.Darkmode;
     return (

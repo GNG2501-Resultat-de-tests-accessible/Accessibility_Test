@@ -22,16 +22,18 @@ const styles = StyleSheet.create({
     Button: {
         color: "#FFFFFF",
         textAlign: "center",
-        fontFamily: 'pMedium',
-        fontSize: 20,
+        fontFamily: 'pBold',
+        fontSize: 25,
         justifyContent : "center",
         alignItems : "center",
     },
     Pressable: {
         backgroundColor: "#7AA8AE",
+        height: 50,
         margin:70,
         marginTop: 100,
         borderRadius:8,
+        justifyContent : "center",
         textAlign : "center",
     },
     Darkmode :{
