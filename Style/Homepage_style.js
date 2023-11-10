@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
         fontFamily: 'pBold',
         fontSize: 30,
         margin: 20,
-        marginTop: 80,
+        marginTop: 40,
         color: '#7AA8AE',
     },
     Welcome: {
@@ -14,9 +14,9 @@ const styles = StyleSheet.create({
         fontSize: 27,
     },
     Imagee: {
-        marginTop:80,
-        width: 300,
-        height:300,
+        width:130,
+        height :130,
+        alignSelf: "center"
     },
 
     Button: {
@@ -30,9 +30,11 @@ const styles = StyleSheet.create({
     Pressable: {
         backgroundColor: "#7AA8AE",
         height: 50,
-        margin:70,
-        marginTop: 100,
-        borderRadius:8,
+        top: 750,
+        width: 300,
+        left: "15%",
+        position : "absolute",
+        borderRadius:20,
         justifyContent : "center",
         textAlign : "center",
     },
@@ -51,6 +53,7 @@ const styles = StyleSheet.create({
     },
     WelcomeDark : {
         fontFamily: 'pBold',
+        alignSelf: "center",
         marginTop: 20,
         fontSize: 27,
         color : "#ffffff"
@@ -59,7 +62,62 @@ const styles = StyleSheet.create({
         color : "#000000"
     },
     ClickonDark : {
-        color : "#ffffff"
+        color : "#ffffff",
+        alignSelf: "center",
+        fontSize : 20,
+        fontFamily : "pMedium",
+    },
+    InstructionBlock : {
+        backgroundColor : "#252936",
+        alignContent: "center",
+        borderRadius : 10,
+        marginTop: 50,
+        width : 330,
+        height : 180,
+        flexDirection : "row"
+    },
+    InstructionSet:{
+        justifyContent : "center",
+        backgroundColor : "#151317",
+        zIndex: 1,
+        margin:30,
+        height: 800,
+        width : "98%",
+        borderRadius: 10,
+        justifyContent : "center",
+        alignItems : "center",
+        marginLeft :"auto",
+        marginRight : "auto"
+    },
+    InstructionTitle:{
+        marginLeft:20,
+        marginTop : 25,
+        fontSize:20,
+        fontFamily : "pBold",
+        color :"#7AA8AE",
+    },
+    InstructionDescription : {
+        marginLeft: 20,
+        alignItems: "center",
+        fontSize : 15,
+        fontFamily : "pMedium",
+        color :"#ffffff"
+    },
+    InstructionInsideBlock : {
+        backgroundColor : "#1a1d26",
+        alignItems: "center",
+        borderRadius : 10,
+        width: 200,
+        marginLeft:10
+    },
+    ScrollViewStyle:{
+        height: 200,
+    },
+    firstImageStyle : {
+        width:300,
+        height :300,
+        margin:20,
+        alignSelf: "center"
     }
 
 })
