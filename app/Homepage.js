@@ -10,6 +10,9 @@ import { useState } from "react";
 
 const Home = () =>{
 
+      //change text and function state
+      const [pressText, setPressText] = useState("Next");
+
     //Double Tap Function on an Html element
     let lastpress = 0; // last time tap
     const DoubleTap = () =>{                    //DoubleTap function that detects double press in the middle of the screen
@@ -44,8 +47,16 @@ const Home = () =>{
         }
     });
     const changeActive = () =>{
+        setPressText("Start");
         setIsActive(!isActive);
     }
+
+    //Change to Scan Page
+    const changePage = () =>{
+        router.push("/Scanpage");
+    }
+
+  
 
 
     // this represents the code of the first page(Home page) of the app
@@ -83,8 +94,8 @@ const Home = () =>{
             </Animated.View>
             </ScrollView>
             <View style = {styles.Pressable} >  
-            <Pressable  onPress = {() =>{changeActive() }}  asChild>
-                    <Text style={styles.Button}>start</Text>
+            <Pressable  onPress = {() =>{isActive?changePage():changeActive() }}  asChild>
+                    <Text style={styles.Button}>{pressText}</Text>
             </Pressable>
             </View> 
             </GestureHandlerRootView>
