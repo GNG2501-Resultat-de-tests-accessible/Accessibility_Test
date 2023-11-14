@@ -1,11 +1,12 @@
 import { Text, SafeAreaView, View } from "react-native";
 import styles from "../Style/Homepage_style.js";
 import layout_styles from "../Style/Layoutstyle.js";
-import { Image, Button, Pressable, Appearance, useColorScheme, StatusBar } from "react-native";
+import { Image, Button, Pressable, Appearance, useColorScheme, StatusBar, StyleSheet } from "react-native";
 import { Link, router } from "expo-router";
-import {SlideInDown,FadeInUp, FadeInDown } from "react-native-reanimated";
+import {SlideInDown,FadeInUp, FadeInDown, useAnimatedStyle, withTiming, withDelay } from "react-native-reanimated";
 import Animated from "react-native-reanimated";
 import { Gesture, TapGestureHandler, GestureHandlerRootView, ScrollView } from "react-native-gesture-handler";
+import { useState } from "react";
 
 const Home = () =>{
 
@@ -31,7 +32,20 @@ const Home = () =>{
 
 
     //Switch to Instructions Handler
-
+    const [isActive, setIsActive] = useState(false);
+    let InstructionSetMode = isActive? styles.InstructionSetActive: styles.InstructionSet;
+    const animatedStyles = useAnimatedStyle(()=>{
+        return {
+            transform :[
+                {
+                    translateY : isActive? withTiming(-650):withTiming(0) 
+                }
+            ]
+        }
+    });
+    const changeActive = () =>{
+        setIsActive(!isActive);
+    }
 
 
     // this represents the code of the first page(Home page) of the app
@@ -44,7 +58,7 @@ const Home = () =>{
             <Text style = {WelcomTextTheme}>Welcome !</Text>
             <Image source = {require("../src/image/homepage_image.png")} style= {styles.firstImageStyle}></Image>  
             <Text style = {IndicationTextTheme}>Here is a quick guide:</Text>                                                    
-            <SafeAreaView style ={styles.InstructionSet}>
+            <Animated.View style ={[styles.InstructionSet,animatedStyles]}>
                 <View style={styles.InstructionBlock}>
                     <Image source = {require("../src/image/homepage_image.png")} style= {styles.Imagee}></Image>
                     <View style = {styles.InstructionInsideBlock}>
@@ -66,14 +80,13 @@ const Home = () =>{
                     <Text style = {styles.InstructionDescription}>The system will analyse and indicate the result of the test</Text>
                     </View>
                 </View>
-            </SafeAreaView>
+            </Animated.View>
             </ScrollView>
-                
-            <Link href="/Scanpage" style = {styles.Pressable} asChild>
-            <Pressable >
+            <View style = {styles.Pressable} >  
+            <Pressable  onPress = {() =>{changeActive() }}  asChild>
                     <Text style={styles.Button}>start</Text>
             </Pressable>
-            </Link>
+            </View> 
             </GestureHandlerRootView>
         
     )
