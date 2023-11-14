@@ -8,6 +8,8 @@ import Animated from "react-native-reanimated";
 import { Gesture, TapGestureHandler, GestureHandlerRootView, ScrollView } from "react-native-gesture-handler";
 
 const Home = () =>{
+
+    //Double Tap Function on an Html element
     let lastpress = 0; // last time tap
     const DoubleTap = () =>{                    //DoubleTap function that detects double press in the middle of the screen
         const time = new Date().getTime(); //Get Time Press
@@ -18,18 +20,27 @@ const Home = () =>{
         }
         lastpress = time;
     }
-    
+    //
+
+
+    //Dark and Light Theme Handler
     let colorsheme = useColorScheme();
     let ContainerTheme = colorsheme ==='light'? styles.Lightmode : styles.Darkmode; //theme of the viewpage
     let WelcomTextTheme = colorsheme ==='light'? styles.WelcomeLight : styles.WelcomeDark; //Theme of Welcome Text
     let IndicationTextTheme = colorsheme ==='light'? styles.ClickonLight : styles.ClickonDark; // Indication Text Theme
+
+
+    //Switch to Instructions Handler
+
+
+
     // this represents the code of the first page(Home page) of the app
     return(
         
             <GestureHandlerRootView style = {ContainerTheme}>
             <StatusBar  backgroundColor= {colorsheme=== 'light'? "fffff": "#231f26"}/>
             <Animated.Text style={styles.Title} entering={FadeInUp}>Test Access</Animated.Text>
-            <ScrollView style = {styles.ScrollViewStyle}>
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }} style = {styles.ScrollViewStyle}>
             <Text style = {WelcomTextTheme}>Welcome !</Text>
             <Image source = {require("../src/image/homepage_image.png")} style= {styles.firstImageStyle}></Image>  
             <Text style = {IndicationTextTheme}>Here is a quick guide:</Text>                                                    
