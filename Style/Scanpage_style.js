@@ -4,11 +4,11 @@ const ScanStyle = StyleSheet.create({
     Scanning : {
         justifyContent:"center",
         alignItems: "center",
-        marginTop : 150
+        marginTop : 100
     },
     ScanText : {
         fontFamily : "pBold",
-        fontSize: 30,
+        fontSize: 25,
         color: '#7AA8AE'
     },
     CamArea : {
@@ -16,9 +16,10 @@ const ScanStyle = StyleSheet.create({
         margin : "auto",
         width: 350,
         left: '7%',
-        height: 350,
+        height: 450,
+        borderRadius : 10,
         margin: 'auto',
-        marginTop : 50,
+        marginTop : 80,
         justifyContent: "center",
         alignItems: "center",
     },
@@ -27,10 +28,27 @@ const ScanStyle = StyleSheet.create({
         height : 50
     },
     Darkmode :{
-        backgroundColor: "#231f26"
+        backgroundColor: "#231f26",
+        height : "100 %"
     },
     Lightmode :{
-        backgroundColor: "#ffffff"
+        backgroundColor: "#ffffff",
+        height : "100 %"
+    },
+    StatuesBarLight : {
+        backgroundColor: "#ffffff",
+    },
+    StatuesBarDark : {
+        backgroundColor: "#231f26",
+    },
+    ContainingBox : {
+        backgroundColor : "#151317",
+        position :"absolute",
+        width : "100 %",
+        height : "100%",
+        marginTop: 180,
+        borderRadius : 50,
     }
+
 })
 export default ScanStyle;

@@ -5,17 +5,23 @@ import ScanStyle from "../Style/Scanpage_style.js";
 import styles from "../Style/Homepage_style.js";
 import * as cam_image from '../src/image/homepage_image.png';
 import { Link, router } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 
 
 const Scan = ()=>{
     router.canGoBack("/Homepage");
     let colorsheme = useColorScheme();
     const ContainerTheme = colorsheme ==='light'? ScanStyle.Lightmode : ScanStyle.Darkmode;
+    const StatuesBarTheme = colorsheme ==='light'? ScanStyle.StatuesBarLight : ScanStyle.StatuesBarDark;
+
     return (
-        <SafeAreaView>
+        <SafeAreaView style ={ContainerTheme}>
+            <StatusBar backgroundColor= {colorsheme=== 'light'? "fffff": "#231f26"} ></StatusBar>
+            
             <SafeAreaView style ={ScanStyle.Scanning}>
-                <Text style = {ScanStyle.ScanText}>Scanning</Text>
+                <Text style = {ScanStyle.ScanText}>Scan the Test</Text>
             </SafeAreaView>
+            <SafeAreaView style = {ScanStyle.ContainingBox} />
             <SafeAreaView style={ScanStyle.CamArea}>
             <Image source ={require('../src/image/camera_icon.png')} style={ScanStyle.cam_icon}></Image>
             </SafeAreaView>

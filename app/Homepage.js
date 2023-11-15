@@ -67,7 +67,7 @@ const Home = () =>{
             <Animated.Text style={styles.Title} entering={FadeInUp}>Test Access</Animated.Text>
             <ScrollView contentContainerStyle={{ flexGrow: 1 }} style = {styles.ScrollViewStyle}>
             <Text style = {WelcomTextTheme}>Welcome !</Text>
-            <Image source = {require("../src/image/homepage_image.png")} style= {styles.firstImageStyle}></Image>  
+            <Animated.Image source = {require("../src/image/homepage_image.png")} style= {styles.firstImageStyle}></Animated.Image>  
             <Text style = {IndicationTextTheme}>Here is a quick guide:</Text>                                                    
             <Animated.View style ={[styles.InstructionSet,animatedStyles]}>
                 <View style={styles.InstructionBlock}>
