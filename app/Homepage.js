@@ -10,6 +10,17 @@ import { useState } from "react";
 
 const Home = () =>{
 
+    //Status bar check
+    const STATUSBAR_HEIGHT = StatusBar.currentHeight;
+    const MyStatusBar = ({backgroundColor, ...props}) => (
+        <View style={[{height :STATUSBAR_HEIGHT }, { backgroundColor }]}>
+          <SafeAreaView>
+            <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+          </SafeAreaView>
+        </View>
+      );
+    
+
       //change text and function state
       const [pressText, setPressText] = useState("Next");
 
@@ -36,6 +47,7 @@ const Home = () =>{
 
     //Switch to Instructions Handler
     const [isActive, setIsActive] = useState(false);
+    const [noticeIsActive,setNoticeIsActive] = useState(false);
     let InstructionSetMode = isActive? styles.InstructionSetActive: styles.InstructionSet;
     const animatedStyles = useAnimatedStyle(()=>{
         return {
@@ -56,6 +68,28 @@ const Home = () =>{
         router.push("/Scanpage");
     }
 
+    //Notice State change
+    const NoticeAnimation = useAnimatedStyle(() =>{
+        return {
+        transform : [
+             {
+            translateY : noticeIsActive? withTiming(0):withTiming(5000)
+            }
+        ]}
+    })
+
+    //PageStates
+    const stateTrigger = () => {
+        if (!isActive) {
+            setPressText("Start");
+            setIsActive(!isActive);
+        }
+        else{
+            //setNoticeIsActive(true);
+            router.push("/Scanpage");
+        }
+    }
+
   
 
 
@@ -63,7 +97,7 @@ const Home = () =>{
     return(
         
             <GestureHandlerRootView style = {ContainerTheme}>
-            <StatusBar  backgroundColor= {colorsheme=== 'light'? "fffff": "#231f26"}/>
+            <MyStatusBar  backgroundColor= {colorsheme=== 'light'? "fffff": "#231f26"}/>
             <Animated.Text style={styles.Title} entering={FadeInUp}>Test Access</Animated.Text>
             <ScrollView contentContainerStyle={{ flexGrow: 1 }} style = {styles.ScrollViewStyle}>
             <Text style = {WelcomTextTheme}>Welcome !</Text>
@@ -94,11 +128,22 @@ const Home = () =>{
             </Animated.View>
             </ScrollView>
             <View style = {styles.Pressable} >  
-            <Pressable  onPress = {() =>{isActive?changePage():changeActive() }}  asChild>
+            <Pressable  onPress = {() =>{stateTrigger() }}  asChild>
                     <Text style={styles.Button}>{pressText}</Text>
             </Pressable>
             </View> 
+            <Animated.View style={[styles.CameraPermissionView,NoticeAnimation]}>
+                <Text style={[WelcomTextTheme, {color : "#7AA8AE"}]}>Notice !</Text>
+                <Animated.View style = {[styles.NoticeText]}>
+                    <Text style ={[styles.InstructionDescription,{margin : 40},{textAlign: "center"}]}>This appliction needs Camera permission</Text>
+                    <Pressable style = {[styles.NoticeButton,{position : "relative"}]}>
+                        <Text style = {[styles.Button,{fontSize:20}]}>Permit</Text>
+                    </Pressable>
+                </Animated.View>
+            </Animated.View>
+            
             </GestureHandlerRootView>
+            
         
     )
 }

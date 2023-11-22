@@ -134,6 +134,37 @@ const styles = StyleSheet.create({
         height :300,
         margin:20,
         alignSelf: "center"
+    },
+
+    CameraPermissionView: {
+        position : "absolute",
+        alignSelf : "center",
+        width: 380,
+        height: 250,
+        top: 0,
+        backgroundColor : "#303545",
+        borderRadius :10,
+        top : "30%",
+        zIndex:3
+    },
+
+    NoticeText : {
+        width : 380,
+        height : 130,
+        borderRadius: 5,
+        alignSelf : "center",
+        backgroundColor : "#20232e"
+    },
+    NoticeButton :{
+            backgroundColor: "#7AA8AE",
+            height: 40,
+            margin:10,
+            zIndex : 0,
+            width: 200,
+            borderRadius:10,
+            justifyContent : "center",
+            textAlign : "center",
+            alignSelf: "center"
     }
 
 })
