@@ -51,8 +51,8 @@ const Scan = ()=>{
             <SafeAreaView style={ScanStyle.CamArea}>
             <Camera ref={cameraRef} style = {ScanStyle.CameraStyle} type={type}></Camera>
             </SafeAreaView>
-            <Link href="/Resultpage" style = {styles.Pressable} asChild>
-            <Pressable style = {styles.Pressable}>
+            <Link href="/Resultpage" style = {[styles.Pressable,{top: "90%"}, ]} asChild>
+            <Pressable>
                     <Text style={styles.Button}>Scan</Text>
             </Pressable>
             </Link>
