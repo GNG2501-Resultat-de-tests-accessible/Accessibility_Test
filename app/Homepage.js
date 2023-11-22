@@ -41,7 +41,7 @@ const Home = () =>{
         return {
             transform :[
                 {
-                    translateY : isActive? withTiming(-650):withTiming(0) 
+                    translateY : isActive? withTiming(-580):withTiming(175)
                 }
             ]
         }
