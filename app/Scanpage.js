@@ -17,58 +17,37 @@ import * as FileSystem from "expo-file-system";
 import modelJson from "../model/model.json";
 import modelWeights from "../model/weights.bin";
 
+import {
+	getModel,
+	convertBase64ToTensor,
+	startPrediction,
+} from "../helpers/tensorflow-helper.js";
+import { cropPicture } from "../helpers/image-helper.js";
+const RESULT_MAPPING = ["Positive COVID Test", "Negative COVID Test"];
+
 const Scan = () => {
 	//Model Stuff
 	//const URL = "https://teachablemachine.withgoogle.com/models/BEpPbdSvk/";
 
-	const [model, setModel] = useState(null);
+	const [result, setResult] = useState("");
 
-	useEffect(() => {
-		(async () => {
-			await tf.ready();
-			console.log("tf ready");
-
-			const modelJson =
-				"https://teachablemachine.withgoogle.com/models/BEpPbdSvk/model.json"; // Replace with your model URL
-			const modelWeights =
-				"https://teachablemachine.withgoogle.com/models/BEpPbdSvk/model.weights.bin"; // Replace with your weights URL
-			//const model = await loadGraphModel(modelJson, modelWeights);
-			//console.log("model json loaded");
-			const model = await loadGraphModel(modelJson);
-			//const model = await tf.loadGraphModel(
-			//bundleResourceIO(modelJson, modelWeights)
-			//);
-			console.log("model loaded");
-			setModel(model);
-		})();
-	}, []);
-
-	const takePicture = async () => {
-		if (cameraRef.current) {
-			const options = { quality: 1, base64: true };
-			const data = await cameraRef.current.takePictureAsync(options);
-			const imageUri = data.uri;
-			const base64ImageData = await FileSystem.readAsStringAsync(imageUri, {
-				encoding: FileSystem.EncodingType.Base64,
-			});
-			const binaryImageData = Buffer.from(base64ImageData, "base64");
-			const imageTensor = imageToTensor(binaryImageData);
-			const prediction = await model.predict(imageTensor);
-			console.log(prediction);
-		}
+	const handleImageCapture = async () => {
+		const options = { quality: 0.5, base64: true, skipProcessing: true };
+		const imageData = await cameraRef.current.takePictureAsync(options);
+		processImagePrediction(imageData);
 	};
 
-	const imageToTensor = (rawImageData) => {
-		const { width, height, data } = jpeg.decode(rawImageData, true);
-		const buffer = new Uint8Array(width * height * 3);
-		let offset = 0;
-		for (let i = 0; i < buffer.length; i += 3) {
-			buffer[i] = data[offset];
-			buffer[i + 1] = data[offset + 1];
-			buffer[i + 2] = data[offset + 2];
-			offset += 4;
-		}
-		return tf.tensor3d(buffer, [height, width, 3]);
+	const processImagePrediction = async (base64Image) => {
+		const croppedDate = await cropPicture(base64Image, 300);
+		const model = await getModel();
+		const tensor = await convertBase64ToTensor(croppedDate.base64);
+		const prediction = await startPrediction(model, tensor);
+		console.log("prediction", prediction);
+		const highestPrediction = prediction.indexOf(
+			Math.max.apply(null, prediction)
+		);
+		setResult(RESULT_MAPPING[highestPrediction]);
+		console.log("result", RESULT_MAPPING[highestPrediction]);
 	};
 
 	//Camera hooks
@@ -123,7 +102,7 @@ const Scan = () => {
 					asChild
 				>
 					<View style={[styles.Pressable, { top: 800 }]}>
-						<Pressable onPress={takePicture}>
+						<Pressable onPress={() => handleImageCapture()}>
 							<Text style={styles.Button}>Scan</Text>
 						</Pressable>
 					</View>
