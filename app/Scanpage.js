@@ -7,49 +7,66 @@ import styles from "../Style/Homepage_style.js";
 import * as cam_image from "../src/image/homepage_image.png";
 import { Link, router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { useRef, useState } from "react";
-import * as tf from "@tensorflow/tfjs-react-native";
-import * as tmImage from "@teachablemachine/image";
+import * as tf from "@tensorflow/tfjs";
+//import * as tmImage from "@teachablemachine/image";
+import React, { useRef, useState, useEffect } from "react";
+import { bundleResourceIO } from "@tensorflow/tfjs-react-native";
+import { loadGraphModel } from "@tensorflow/tfjs-converter";
+import * as jpeg from "jpeg-js";
+import * as FileSystem from "expo-file-system";
+import modelJson from "../model/model.json";
+import modelWeights from "../model/weights.bin";
 
 const Scan = () => {
 	//Model Stuff
-	const URL = "./model/model.json";
-	let model, webcam, labelContainer, maxPredictions;
+	//const URL = "https://teachablemachine.withgoogle.com/models/BEpPbdSvk/";
 
-	async function init() {
-		const modelURL = URL + "/model.json";
-		const metadataURL = URL + "/metadata.json";
+	const [model, setModel] = useState(null);
 
-		// load the model and metadata
-		// Refer to tmImage.loadFromFiles() in the API to support files from a file picker
-		// or files from your local hard drive
-		// Note: the pose library adds "tmImage" object to your window (window.tmImage)
-		model = await tmImage.load(modelURL, metadataURL);
-		maxPredictions = model.getTotalClasses();
-		await takePhoto();
-	}
+	useEffect(() => {
+		(async () => {
+			await tf.ready();
+			console.log("tf ready");
 
-	let takePhoto = async () => {
+			//const modelJson ="https://teachablemachine.withgoogle.com/models/BEpPbdSvk/model.json"; // Replace with your model URL
+			//const modelWeights = "https://teachablemachine.withgoogle.com/models/BEpPbdSvk/model.weights.bin"; // Replace with your weights URL
+			//const model = await loadGraphModel(modelJson, modelWeights);
+			//console.log("model json loaded");
+			//const model = await loadGraphModel(modelJson);
+			const model = await tf.loadGraphModel(
+				bundleResourceIO(modelJson, modelWeights)
+			);
+			console.log("model loaded");
+			setModel(model);
+		})();
+	}, []);
+
+	const takePicture = async () => {
 		if (cameraRef.current) {
-			const options = { quality: 0.5, base64: true, skipProcessing: true };
+			const options = { quality: 1, base64: true };
 			const data = await cameraRef.current.takePictureAsync(options);
-			console.log("Photo Taken");
-			await predict(data);
-			//await predict(data.uri);
+			const imageUri = data.uri;
+			const rawImageData = await FileSystem.readAsStringAsync(imageUri, {
+				encoding: FileSystem.EncodingType.Base64,
+			});
+			const imageTensor = imageToTensor(rawImageData);
+			const prediction = await model.predict(imageTensor);
+			console.log(prediction);
 		}
 	};
 
-	// run the webcam image through the image model
-	async function predict(photo) {
-		console.log("Predicting");
-		// predict can take in an image, video or canvas html element
-		const prediction = await model.predict(photo);
-		for (let i = 0; i < maxPredictions; i++) {
-			const classPrediction =
-				prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-			console.log(classPrediction);
+	const imageToTensor = (rawImageData) => {
+		const { width, height, data } = jpeg.decode(rawImageData, true);
+		const buffer = new Uint8Array(width * height * 3);
+		let offset = 0;
+		for (let i = 0; i < buffer.length; i += 3) {
+			buffer[i] = data[offset];
+			buffer[i + 1] = data[offset + 1];
+			buffer[i + 2] = data[offset + 2];
+			offset += 4;
 		}
-	}
+		return tf.tensor3d(buffer, [height, width, 3]);
+	};
 
 	//Camera hooks
 	const cameraRef = useRef();
@@ -98,11 +115,13 @@ const Scan = () => {
 					type={type}
 				></Camera>
 			</SafeAreaView>
-			<View style={[styles.Pressable, { top: 800 }]}>
-				<Pressable onPress={() => init()}>
-					<Text style={styles.Button}>Scan</Text>
-				</Pressable>
-			</View>
+			<SafeAreaView>
+				<View style={[styles.Pressable, { top: 800 }]}>
+					<Pressable onPress={takePicture}>
+						<Text style={styles.Button}>Scan</Text>
+					</Pressable>
+				</View>
+			</SafeAreaView>
 		</SafeAreaView>
 	);
 };
