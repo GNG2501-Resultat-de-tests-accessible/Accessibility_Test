@@ -28,14 +28,16 @@ const Scan = () => {
 			await tf.ready();
 			console.log("tf ready");
 
-			//const modelJson ="https://teachablemachine.withgoogle.com/models/BEpPbdSvk/model.json"; // Replace with your model URL
-			//const modelWeights = "https://teachablemachine.withgoogle.com/models/BEpPbdSvk/model.weights.bin"; // Replace with your weights URL
+			const modelJson =
+				"https://teachablemachine.withgoogle.com/models/BEpPbdSvk/model.json"; // Replace with your model URL
+			const modelWeights =
+				"https://teachablemachine.withgoogle.com/models/BEpPbdSvk/model.weights.bin"; // Replace with your weights URL
 			//const model = await loadGraphModel(modelJson, modelWeights);
 			//console.log("model json loaded");
-			//const model = await loadGraphModel(modelJson);
-			const model = await tf.loadGraphModel(
-				bundleResourceIO(modelJson, modelWeights)
-			);
+			const model = await loadGraphModel(modelJson);
+			//const model = await tf.loadGraphModel(
+			//bundleResourceIO(modelJson, modelWeights)
+			//);
 			console.log("model loaded");
 			setModel(model);
 		})();
@@ -46,10 +48,11 @@ const Scan = () => {
 			const options = { quality: 1, base64: true };
 			const data = await cameraRef.current.takePictureAsync(options);
 			const imageUri = data.uri;
-			const rawImageData = await FileSystem.readAsStringAsync(imageUri, {
+			const base64ImageData = await FileSystem.readAsStringAsync(imageUri, {
 				encoding: FileSystem.EncodingType.Base64,
 			});
-			const imageTensor = imageToTensor(rawImageData);
+			const binaryImageData = Buffer.from(base64ImageData, "base64");
+			const imageTensor = imageToTensor(binaryImageData);
 			const prediction = await model.predict(imageTensor);
 			console.log(prediction);
 		}
@@ -114,13 +117,17 @@ const Scan = () => {
 					style={ScanStyle.CameraStyle}
 					type={type}
 				></Camera>
-			</SafeAreaView>
-			<SafeAreaView>
-				<View style={[styles.Pressable, { top: 800 }]}>
-					<Pressable onPress={takePicture}>
-						<Text style={styles.Button}>Scan</Text>
-					</Pressable>
-				</View>
+				<Link
+					href='/Resultpage'
+					style={[styles.Pressable, { top: "90%" }]}
+					asChild
+				>
+					<View style={[styles.Pressable, { top: 800 }]}>
+						<Pressable onPress={takePicture}>
+							<Text style={styles.Button}>Scan</Text>
+						</Pressable>
+					</View>
+				</Link>
 			</SafeAreaView>
 		</SafeAreaView>
 	);
