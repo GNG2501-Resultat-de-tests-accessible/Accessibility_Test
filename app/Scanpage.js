@@ -7,15 +7,7 @@ import styles from "../Style/Homepage_style.js";
 import * as cam_image from "../src/image/homepage_image.png";
 import { Link, router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import * as tf from "@tensorflow/tfjs";
-//import * as tmImage from "@teachablemachine/image";
 import React, { useRef, useState, useEffect } from "react";
-import { bundleResourceIO } from "@tensorflow/tfjs-react-native";
-import { loadGraphModel } from "@tensorflow/tfjs-converter";
-import * as jpeg from "jpeg-js";
-import * as FileSystem from "expo-file-system";
-import modelJson from "../model/model.json";
-import modelWeights from "../model/weights.bin";
 
 import {
 	getModel,
@@ -27,7 +19,6 @@ const RESULT_MAPPING = ["Positive COVID Test", "Negative COVID Test"];
 
 const Scan = () => {
 	//Model Stuff
-	//const URL = "https://teachablemachine.withgoogle.com/models/BEpPbdSvk/";
 
 	const [result, setResult] = useState("");
 
