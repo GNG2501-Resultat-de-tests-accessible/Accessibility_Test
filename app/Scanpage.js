@@ -33,15 +33,16 @@ const Scan = () => {
 			const options = { quality: 0.5, base64: true, skipProcessing: true };
 			const data = await cameraRef.current.takePictureAsync(options);
 			console.log("Photo Taken");
-			return data;
+			await predict(data);
+			//await predict(data.uri);
 		}
-		
 	};
 
 	// run the webcam image through the image model
-	async function predict() {
+	async function predict(photo) {
+		console.log("Predicting");
 		// predict can take in an image, video or canvas html element
-		const prediction = await model.predict(takePhoto());
+		const prediction = await model.predict(photo);
 		for (let i = 0; i < maxPredictions; i++) {
 			const classPrediction =
 				prediction[i].className + ": " + prediction[i].probability.toFixed(2);
@@ -96,10 +97,8 @@ const Scan = () => {
 					type={type}
 				></Camera>
 			</SafeAreaView>
-			<View
-				style={[styles.Pressable, { top: 800 }]}
-			>
-				<Pressable onPress={() =>predict()}>
+			<View style={[styles.Pressable, { top: 800 }]}>
+				<Pressable onPress={() => predict()}>
 					<Text style={styles.Button}>Scan</Text>
 				</Pressable>
 			</View>
