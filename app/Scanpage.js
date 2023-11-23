@@ -31,6 +31,7 @@ const Scan = () => {
 	let takePhoto = async () => {
 		let options = { quality: 1, base64: true };
 		let photo = await cameraRef.current.takePictureAsync(options);
+		return photo;
 	};
 
 	// run the webcam image through the image model
