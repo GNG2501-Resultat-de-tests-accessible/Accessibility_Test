@@ -8,17 +8,17 @@ import * as cam_image from "../src/image/homepage_image.png";
 import { Link, router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useRef, useState } from "react";
-import * as tf from "@tensorflow/tfjs";
+import * as tf from "@tensorflow/tfjs-react-native";
 import * as tmImage from "@teachablemachine/image";
 
 const Scan = () => {
 	//Model Stuff
-	const URL = "https://teachablemachine.withgoogle.com/models/BEpPbdSvk/";
+	const URL = "./model/model.json";
 	let model, webcam, labelContainer, maxPredictions;
 
 	async function init() {
-		const modelURL = URL + "model.json";
-		const metadataURL = URL + "metadata.json";
+		const modelURL = URL + "/model.json";
+		const metadataURL = URL + "/metadata.json";
 
 		// load the model and metadata
 		// Refer to tmImage.loadFromFiles() in the API to support files from a file picker

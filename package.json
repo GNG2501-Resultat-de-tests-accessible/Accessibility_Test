@@ -12,6 +12,7 @@
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
     "@teachablemachine/image": "^0.8.5",
     "@tensorflow/tfjs": "^4.13.0",
+    "@tensorflow/tfjs-react-native": "^0.8.0",
     "axios": "^1.5.1",
     "expo": "~49.0.13",
     "expo-blur": "~12.4.1",
