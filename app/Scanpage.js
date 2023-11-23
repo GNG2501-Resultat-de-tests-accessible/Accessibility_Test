@@ -26,6 +26,7 @@ const Scan = () => {
 		// Note: the pose library adds "tmImage" object to your window (window.tmImage)
 		model = await tmImage.load(modelURL, metadataURL);
 		maxPredictions = model.getTotalClasses();
+		await takePhoto();
 	}
 
 	let takePhoto = async () => {
@@ -98,7 +99,7 @@ const Scan = () => {
 				></Camera>
 			</SafeAreaView>
 			<View style={[styles.Pressable, { top: 800 }]}>
-				<Pressable onPress={() => predict()}>
+				<Pressable onPress={() => init()}>
 					<Text style={styles.Button}>Scan</Text>
 				</Pressable>
 			</View>
