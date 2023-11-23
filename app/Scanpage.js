@@ -5,6 +5,7 @@ import {
 	Button,
 	Dimensions,
 	TouchableOpacity,
+	ActivityIndicator,
 } from "react-native";
 import layout_styles from "../Style/Layoutstyle.js";
 import { Camera, CameraType } from "expo-camera";
@@ -21,6 +22,7 @@ import {
 	startPrediction,
 } from "../helpers/tensorflow-helper.js";
 import { cropPicture } from "../helpers/image-helper.js";
+import { isLoading } from "expo-font";
 
 const RESULT_MAPPING = ["Positive COVID Test", "Negative COVID Test"];
 //const screenWidth = Dimensions.get("window").width;
@@ -30,12 +32,23 @@ const Scan = () => {
 	//Model Stuff
 
 	const [result, setResult] = useState("");
+	const [loading, setLoading] = useState(false);
+	const [image, setImage] = useState(null);
 
 	const handleImageCapture = async () => {
+		if (loading) return;
+		setLoading(true);
 		console.log("Image Taken");
-		const options = { quality: 0.5, base64: true, skipProcessing: true };
-		const imageData = await cameraRef.current.takePictureAsync(options);
-		processImagePrediction(imageData);
+		try {
+			const options = { quality: 0.5, base64: true };
+			const imageData = await cameraRef.current.takePictureAsync(options);
+			setImage(imageData.uri);
+			await processImagePrediction(imageData);
+		} catch (error) {
+			console.error("Error capturing image", error);
+		}
+		setLoading(false);
+		setImage(null);
 	};
 
 	const processImagePrediction = async (base64Image) => {
@@ -92,17 +105,34 @@ const Scan = () => {
 			</SafeAreaView>
 			<SafeAreaView style={ScanStyle.ContainingBox} />
 			<SafeAreaView style={ScanStyle.CamArea}>
-				<TouchableOpacity
-					style={{ flex: 1 }}
-					activeOpacity={1}
-					onPress={handleImageCapture}
-				>
-					<Camera
-						ref={cameraRef}
-						style={ScanStyle.CameraStyle}
-						type={type}
-					></Camera>
-				</TouchableOpacity>
+				{image ? (
+					<View style={{ flex: 1 }}>
+						<Image source={{ uri: image }} style={{ flex: 1 }} />
+						{loading && (
+							<ActivityIndicator
+								size='large'
+								color='#0000ff'
+								style={{
+									position: "absolute",
+									top: "50%",
+									left: "50%",
+								}}
+							/>
+						)}
+					</View>
+				) : (
+					<TouchableOpacity
+						style={{ flex: 1 }}
+						activeOpacity={1}
+						onPress={handleImageCapture}
+					>
+						<Camera
+							ref={cameraRef}
+							style={ScanStyle.CameraStyle}
+							type={type}
+						></Camera>
+					</TouchableOpacity>
+				)}
 				<Link
 					href='/Resultpage'
 					style={[styles.Pressable, { top: "90%" }]}
