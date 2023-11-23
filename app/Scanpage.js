@@ -1,4 +1,4 @@
-import { Text, SafeAreaView, View, Button } from "react-native";
+import { Text, SafeAreaView, View, Button, Dimensions } from "react-native";
 import layout_styles from "../Style/Layoutstyle.js";
 import { Camera, CameraType } from "expo-camera";
 import { Image, Pressable, Appearance, useColorScheme } from "react-native";
@@ -8,14 +8,16 @@ import * as cam_image from "../src/image/homepage_image.png";
 import { Link, router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useRef, useState, useEffect } from "react";
-
 import {
 	getModel,
 	convertBase64ToTensor,
 	startPrediction,
 } from "../helpers/tensorflow-helper.js";
 import { cropPicture } from "../helpers/image-helper.js";
+
 const RESULT_MAPPING = ["Positive COVID Test", "Negative COVID Test"];
+//const screenWidth = Dimensions.get("window").width;
+const screenHeight = Dimensions.get("window").height;
 
 const Scan = () => {
 	//Model Stuff
@@ -92,7 +94,7 @@ const Scan = () => {
 					style={[styles.Pressable, { top: "90%" }]}
 					asChild
 				>
-					<View style={[styles.Pressable, { top: 800 }]}>
+					<View style={[styles.Pressable, { top: screenHeight * 0.9 }]}>
 						<Pressable onPress={() => handleImageCapture()}>
 							<Text style={styles.Button}>Scan</Text>
 						</Pressable>
