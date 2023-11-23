@@ -1,4 +1,11 @@
-import { Text, SafeAreaView, View, Button, Dimensions } from "react-native";
+import {
+	Text,
+	SafeAreaView,
+	View,
+	Button,
+	Dimensions,
+	TouchableOpacity,
+} from "react-native";
 import layout_styles from "../Style/Layoutstyle.js";
 import { Camera, CameraType } from "expo-camera";
 import { Image, Pressable, Appearance, useColorScheme } from "react-native";
@@ -25,6 +32,7 @@ const Scan = () => {
 	const [result, setResult] = useState("");
 
 	const handleImageCapture = async () => {
+		console.log("Image Taken");
 		const options = { quality: 0.5, base64: true, skipProcessing: true };
 		const imageData = await cameraRef.current.takePictureAsync(options);
 		processImagePrediction(imageData);
@@ -84,22 +92,22 @@ const Scan = () => {
 			</SafeAreaView>
 			<SafeAreaView style={ScanStyle.ContainingBox} />
 			<SafeAreaView style={ScanStyle.CamArea}>
-				<Camera
-					ref={cameraRef}
-					style={ScanStyle.CameraStyle}
-					type={type}
-				></Camera>
+				<TouchableOpacity
+					style={{ flex: 1 }}
+					activeOpacity={1}
+					onPress={handleImageCapture}
+				>
+					<Camera
+						ref={cameraRef}
+						style={ScanStyle.CameraStyle}
+						type={type}
+					></Camera>
+				</TouchableOpacity>
 				<Link
 					href='/Resultpage'
 					style={[styles.Pressable, { top: "90%" }]}
 					asChild
-				>
-					<View style={[styles.Pressable, { top: screenHeight * 0.9 }]}>
-						<Pressable onPress={() => handleImageCapture()}>
-							<Text style={styles.Button}>Scan</Text>
-						</Pressable>
-					</View>
-				</Link>
+				></Link>
 			</SafeAreaView>
 		</SafeAreaView>
 	);

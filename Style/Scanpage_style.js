@@ -24,7 +24,7 @@ const ScanStyle = StyleSheet.create({
         justifyContent: "center",
         alignSelf: "center",
         height : "80%", //Bottom margin for camera area*/
-		height: screenHeight * 0.6, // 60% of the screen height
+		height: screenHeight,
 		width: screenWidth, // full screen width
 	},
 	cam_icon: {
