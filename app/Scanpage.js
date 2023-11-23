@@ -32,8 +32,10 @@ const Scan = () => {
 		if (cameraRef.current) {
 			const options = { quality: 0.5, base64: true, skipProcessing: true };
 			const data = await cameraRef.current.takePictureAsync(options);
+			console.log("Photo Taken");
+			return data;
 		}
-		return data;
+		
 	};
 
 	// run the webcam image through the image model
@@ -94,15 +96,13 @@ const Scan = () => {
 					type={type}
 				></Camera>
 			</SafeAreaView>
-			<Link
-				href='/Resultpage'
-				style={[styles.Pressable, { top: "90%" }]}
-				asChild
+			<View
+				style={[styles.Pressable, { top: 800 }]}
 			>
-				<Pressable onPress={predict}>
+				<Pressable onPress={() =>predict()}>
 					<Text style={styles.Button}>Scan</Text>
 				</Pressable>
-			</Link>
+			</View>
 		</SafeAreaView>
 	);
 };
