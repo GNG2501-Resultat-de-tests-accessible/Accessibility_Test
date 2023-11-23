@@ -29,15 +29,17 @@ const Scan = () => {
 	}
 
 	let takePhoto = async () => {
-		let options = { quality: 1, base64: true };
-		let photo = await cameraRef.current.takePictureAsync(options);
-		return photo;
+		if (cameraRef.current) {
+			const options = { quality: 0.5, base64: true, skipProcessing: true };
+			const data = await cameraRef.current.takePictureAsync(options);
+		}
+		return data;
 	};
 
 	// run the webcam image through the image model
 	async function predict() {
 		// predict can take in an image, video or canvas html element
-		const prediction = await model.predict(photo);
+		const prediction = await model.predict(takePhoto());
 		for (let i = 0; i < maxPredictions; i++) {
 			const classPrediction =
 				prediction[i].className + ": " + prediction[i].probability.toFixed(2);
@@ -97,7 +99,7 @@ const Scan = () => {
 				style={[styles.Pressable, { top: "90%" }]}
 				asChild
 			>
-				<Pressable onPress={takePhoto}>
+				<Pressable onPress={predict}>
 					<Text style={styles.Button}>Scan</Text>
 				</Pressable>
 			</Link>
