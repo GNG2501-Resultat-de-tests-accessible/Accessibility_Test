@@ -3,17 +3,18 @@ import styles from "../Style/Homepage_style.js";
 import layout_styles from "../Style/Layoutstyle.js";
 import { Image, Button, Pressable, Appearance, useColorScheme, StatusBar, StyleSheet } from "react-native";
 import { Link, router } from "expo-router";
-import {SlideInDown,FadeInUp, FadeInDown, useAnimatedStyle, withTiming, withDelay } from "react-native-reanimated";
+import {SlideInDown,FadeInUp, FadeInDown, useAnimatedStyle, withTiming, withDelay, Easing } from "react-native-reanimated";
 import Animated from "react-native-reanimated";
 import { Gesture, TapGestureHandler, GestureHandlerRootView, ScrollView } from "react-native-gesture-handler";
 import { useState } from "react";
+import { BlurView } from "expo-blur";
 
 const Home = () =>{
 
     //Status bar check
     const STATUSBAR_HEIGHT = StatusBar.currentHeight;
     const MyStatusBar = ({backgroundColor, ...props}) => (
-        <View style={[{height :STATUSBAR_HEIGHT }, { backgroundColor }]}>
+        <View style={[{height :STATUSBAR_HEIGHT }, { backgroundColor },{zIndex:0}]}>
           <SafeAreaView>
             <StatusBar translucent backgroundColor={backgroundColor} {...props} />
           </SafeAreaView>
@@ -31,7 +32,8 @@ const Home = () =>{
         const delta = time - lastpress;
         const delay = 400; //Press Delay
         if (delta < delay) {
-            router.push({pathname: "/Scanpage"});
+            console.log("doubleTap");
+            stateTrigger();
         }
         lastpress = time;
     }
@@ -48,45 +50,43 @@ const Home = () =>{
     //Switch to Instructions Handler
     const [isActive, setIsActive] = useState(false);
     const [noticeIsActive,setNoticeIsActive] = useState(false);
-    let InstructionSetMode = isActive? styles.InstructionSetActive: styles.InstructionSet;
     const animatedStyles = useAnimatedStyle(()=>{
         return {
+            opacity: isActive? withTiming(1,{duration:800, easing:Easing.inOut(Easing.quad)}):withTiming(0.5),
+            width: isActive? withTiming(400):withTiming(350),
             transform :[
                 {
-                    translateY : isActive? withTiming(-580):withTiming(175)
+                    translateY : isActive? withTiming(-560,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(175),
                 }
             ]
         }
     });
-    const changeActive = () =>{
-        setPressText("Start");
-        setIsActive(!isActive);
-    }
-
-    //Change to Scan Page
-    const changePage = () =>{
-        router.push("/Scanpage");
-    }
 
     //Notice State change
     const NoticeAnimation = useAnimatedStyle(() =>{
         return {
         transform : [
              {
-            translateY : noticeIsActive? withTiming(0):withTiming(5000)
+            translateY : noticeIsActive? withTiming(0,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(800)
             }
         ]}
     })
 
     //PageStates
-    const stateTrigger = () => {
+    function stateTrigger() {
         if (!isActive) {
             setPressText("Start");
             setIsActive(!isActive);
         }
         else{
             //setNoticeIsActive(true);
-            router.push("/Scanpage");
+            if (!noticeIsActive) {
+                setNoticeIsActive(true);
+            }
+            else{
+                router.push("/Scanpage");
+            }
+            
         }
     }
 
@@ -95,11 +95,10 @@ const Home = () =>{
 
     // this represents the code of the first page(Home page) of the app
     return(
-        
-            <GestureHandlerRootView style = {ContainerTheme}>
+            <GestureHandlerRootView onStartShouldSetResponder={DoubleTap} style = {ContainerTheme}>
+
             <MyStatusBar  backgroundColor= {colorsheme=== 'light'? "fffff": "#231f26"}/>
             <Animated.Text style={styles.Title} entering={FadeInUp}>Test Access</Animated.Text>
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }} style = {styles.ScrollViewStyle}>
             <Text style = {WelcomTextTheme}>Welcome !</Text>
             <Animated.Image source = {require("../src/image/homepage_image.png")} style= {styles.firstImageStyle}></Animated.Image>  
             <Text style = {IndicationTextTheme}>Here is a quick guide:</Text>                                                    
@@ -126,12 +125,12 @@ const Home = () =>{
                     </View>
                 </View>
             </Animated.View>
-            </ScrollView>
+
             <View style = {styles.Pressable} >  
-            <Pressable  onPress = {() =>{stateTrigger() }}  asChild>
+            <Pressable  onPress={()=>stateTrigger()}  asChild>
                     <Text style={styles.Button}>{pressText}</Text>
             </Pressable>
-            </View> 
+            </View>
             <Animated.View style={[styles.CameraPermissionView,NoticeAnimation]}>
                 <Text style={[WelcomTextTheme, {color : "#7AA8AE"}]}>Notice !</Text>
                 <Animated.View style = {[styles.NoticeText]}>

@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
 		fontSize: 30,
 		margin: 20,
 		marginTop: 40,
+		zIndex:0,
 		color: "#7AA8AE",
 	},
 	Welcome: {
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "#7AA8AE",
 		//height: 50,
 		top: screenHeight * 0.8,
-		zIndex: 0,
+		zIndex: 3,
 		//width: 380,
 		position: "absolute",
 		borderRadius: 20,
@@ -47,6 +48,7 @@ const styles = StyleSheet.create({
 	},
 	Darkmode: {
 		backgroundColor: "#231f26",
+		zIndex:0,
 		height: screenHeight, //for some reason the safeareaview dosn't cover all the screen
 	},
 	Lightmode: {
@@ -88,14 +90,13 @@ const styles = StyleSheet.create({
 		backgroundColor: "#151317",
 		zIndex: 1,
 		position: "absolute",
-		marginTop: 520,
-		height: 800,
+		marginTop: 620,
+		height: 670,
 		width: "100%",
-		borderRadius: 20,
-		justifyContent: "center",
+		borderRadius: 50,
+		alignSelf: "center",
 		alignItems: "center",
-		marginLeft: "auto",
-		marginRight: "auto",
+		
 	},
 	InstructionSetActive: {
 		justifyContent: "center",
