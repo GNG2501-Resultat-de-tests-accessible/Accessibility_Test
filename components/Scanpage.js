@@ -1,4 +1,11 @@
-import { Text, View, Button, TouchableOpacity, StyleSheet } from "react-native";
+import {
+	Text,
+	View,
+	Button,
+	TouchableOpacity,
+	StyleSheet,
+	ActivityIndicator,
+} from "react-native";
 import { Camera, CameraType } from "expo-camera";
 import { Image, useColorScheme } from "react-native";
 import { StatusBar } from "expo-status-bar";
@@ -82,15 +89,34 @@ export default function Scan() {
 	}
 	return (
 		<View style={[styles.container, themeContainerStyle]}>
-			<TouchableOpacity
-				style={{ flex: 1 }}
-				onPress={handleImageCapture}
-				disabled={loading}
-			>
-				<Camera ref={cameraRef} type={type} style={styles.cameraStyle}>
-					<View style={{ flex: 1, backgroundColor: "transparent" }} />
-				</Camera>
-			</TouchableOpacity>
+			{loading ? (
+				<ActivityIndicator size='large' color='#0000ff' />
+			) : image ? (
+				<View style={{ flex: 1 }}>
+					<Image source={{ uri: image }} style={{ flex: 1 }} />
+					{loading && (
+						<ActivityIndicator
+							size='large'
+							color='#0000ff'
+							style={{
+								position: "absolute",
+								top: "50%",
+								left: "50%",
+							}}
+						/>
+					)}
+				</View>
+			) : (
+				<TouchableOpacity
+					style={{ flex: 1 }}
+					onPress={handleImageCapture}
+					activeOpacity={1.0}
+				>
+					<Camera ref={cameraRef} type={type} style={styles.cameraStyle}>
+						<View style={{ flex: 1, backgroundColor: "transparent" }} />
+					</Camera>
+				</TouchableOpacity>
+			)}
 			<StatusBar style='auto' />
 		</View>
 	);
