@@ -87,7 +87,11 @@ export default function Scan() {
 	}
 	return (
 		<View style={[styles.container, themeContainerStyle]}>
-			<TouchableOpacity style={{ flex: 1 }} onPress={handleImageCapture}>
+			<TouchableOpacity
+				style={{ flex: 1 }}
+				onPress={handleImageCapture}
+				disabled={loading}
+			>
 				<Camera ref={cameraRef} type={type} style={styles.cameraStyle}></Camera>
 			</TouchableOpacity>
 			<StatusBar style='auto' />
