@@ -92,7 +92,9 @@ export default function Scan() {
 				onPress={handleImageCapture}
 				disabled={loading}
 			>
-				<Camera ref={cameraRef} type={type} style={styles.cameraStyle}></Camera>
+				<Camera ref={cameraRef} type={type} style={styles.cameraStyle}>
+					<View style={{ flex: 1, backgroundColor: "transparent" }} />
+				</Camera>
 			</TouchableOpacity>
 			<StatusBar style='auto' />
 		</View>

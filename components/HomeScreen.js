@@ -4,8 +4,6 @@ import {
 	Text,
 	View,
 	useColorScheme,
-	Dimensions,
-	PixelRatio,
 	SafeAreaView,
 	TouchableOpacity,
 } from "react-native";
