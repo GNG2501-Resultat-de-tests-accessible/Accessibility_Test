@@ -32,6 +32,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * https://developer.mozilla.org/en/JavaScript_typed_arrays/Uint8Array
  */
 
+import { Dimensions, PixelRatio } from "react-native";
+export function normalize(size) {
+	const scale = Dimensions.get("window").width / 320;
+	const newSize = size * scale;
+	return Math.round(PixelRatio.roundToNearestPixel(newSize));
+}
+
 export const Base64Binary = {
 	_keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
 

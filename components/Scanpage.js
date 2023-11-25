@@ -3,32 +3,33 @@ import {
 	SafeAreaView,
 	View,
 	Button,
-	Dimensions,
 	TouchableOpacity,
 	ActivityIndicator,
+	StyleSheet,
 } from "react-native";
-import layout_styles from "../Style/Layoutstyle.js";
 import { Camera, CameraType } from "expo-camera";
-import { Image, Pressable, Appearance, useColorScheme } from "react-native";
-import ScanStyle from "../Style/Scanpage_style.js";
-import styles from "../Style/Homepage_style.js";
-import * as cam_image from "../src/image/homepage_image.png";
-import { Link, router } from "expo-router";
+import { Image, useColorScheme } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 import {
 	getModel,
 	convertBase64ToTensor,
 	startPrediction,
 } from "../helpers/tensorflow-helper.js";
 import { cropPicture } from "../helpers/image-helper.js";
-import { isLoading } from "expo-font";
+import { normalize } from "../utils/utils";
 
 const RESULT_MAPPING = ["Positive COVID Test", "Negative COVID Test"];
-//const screenWidth = Dimensions.get("window").width;
-const screenHeight = Dimensions.get("window").height;
 
-const Scan = () => {
+export default function Scan() {
+	const colorScheme = useColorScheme();
+	const themeTextStyle =
+		colorScheme === "light" ? styles.lightThemeText : styles.darkThemeText;
+	const themeContainerStyle =
+		colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
+
 	//Model Stuff
 
 	const [result, setResult] = useState("");
@@ -69,16 +70,6 @@ const Scan = () => {
 	const [type, setType] = useState(CameraType.back);
 	const [permission, requestPermission] = Camera.useCameraPermissions();
 
-	router.canGoBack("/Homepage");
-	let colorsheme = useColorScheme();
-	const ContainerTheme =
-		colorsheme === "light" ? ScanStyle.Lightmode : ScanStyle.Darkmode;
-	const StatuesBarTheme =
-		colorsheme === "light"
-			? ScanStyle.StatuesBarLight
-			: ScanStyle.StatuesBarDark;
-	console.log(permission);
-
 	if (!permission) {
 		// Camera permissions are still loading
 		return <View />;
@@ -95,51 +86,59 @@ const Scan = () => {
 		);
 	}
 	return (
-		<SafeAreaView style={ContainerTheme}>
-			<StatusBar
-				backgroundColor={colorsheme === "light" ? "fffff" : "#231f26"}
-			></StatusBar>
-
-			<SafeAreaView style={ScanStyle.Scanning}>
-				<Text style={ScanStyle.ScanText}>Scan the Test</Text>
+		<View style={[styles.container, themeContainerStyle]}>
+			<SafeAreaView style={styles.iosSafeArea}>
+				<TouchableOpacity style={{ flex: 1 }} onPress={handleImageCapture}>
+					<Camera
+						ref={cameraRef}
+						type={type}
+						style={styles.cameraStyle}
+					></Camera>
+				</TouchableOpacity>
+				<StatusBar style='auto' />
 			</SafeAreaView>
-			<SafeAreaView style={ScanStyle.ContainingBox} />
-			<SafeAreaView style={ScanStyle.CamArea}>
-				{image ? (
-					<View style={{ flex: 1 }}>
-						<Image source={{ uri: image }} style={{ flex: 1 }} />
-						{loading && (
-							<ActivityIndicator
-								size='large'
-								color='#0000ff'
-								style={{
-									position: "absolute",
-									top: "50%",
-									left: "50%",
-								}}
-							/>
-						)}
-					</View>
-				) : (
-					<TouchableOpacity
-						style={{ flex: 1 }}
-						activeOpacity={1}
-						onPress={handleImageCapture}
-					>
-						<Camera
-							ref={cameraRef}
-							style={ScanStyle.CameraStyle}
-							type={type}
-						></Camera>
-					</TouchableOpacity>
-				)}
-				<Link
-					href='/Resultpage'
-					style={[styles.Pressable, { top: "90%" }]}
-					asChild
-				></Link>
-			</SafeAreaView>
-		</SafeAreaView>
+		</View>
 	);
-};
-export default Scan;
+}
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+	},
+	lightContainer: {
+		backgroundColor: "#fff",
+	},
+	darkContainer: {
+		backgroundColor: "#231f26",
+	},
+	lightThemeText: {
+		color: "#231f26",
+	},
+	darkThemeText: {
+		color: "#fff",
+	},
+	imageContainer: {
+		borderWidth: 4,
+		borderColor: "#ff0000",
+	},
+	iosSafeArea: {
+		flex: 1,
+	},
+	text: {
+		fontSize: normalize(20),
+		fontWeight: "bold",
+	},
+	welcomeText: {
+		fontSize: normalize(40),
+		fontWeight: "bold",
+	},
+	touchableOpacityStyle: { flex: 1 },
+	cameraContainer: {
+		flex: 1,
+		width: "100%",
+	},
+	cameraStyle: {
+		flex: 1,
+		width: "100%",
+	},
+});
