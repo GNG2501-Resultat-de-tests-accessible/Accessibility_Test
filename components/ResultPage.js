@@ -9,9 +9,14 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { normalize } from "../utils/utils";
+import ImageViewer from "./ImageViewer";
 
 export default function Result({ route }) {
 	const { result } = route.params;
+	const resultImage =
+		result === "Positive COVID Test"
+			? require("../assets/positive.png")
+			: require("../assets/negative.png");
 	const navigation = useNavigation();
 	const colorScheme = useColorScheme();
 	const themeTextStyle =
@@ -20,20 +25,14 @@ export default function Result({ route }) {
 		colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
 
 	return (
-		<TouchableOpacity
-			style={styles.touchableOpacityStyle}
-			activeOpacity={1.0}
-			onPress={handleTap}
-		>
+		<TouchableOpacity style={styles.touchableOpacityStyle} activeOpacity={1.0}>
 			<View style={[styles.container, themeContainerStyle]}>
 				<SafeAreaView style={styles.iosSafeArea}>
 					<Text style={[styles.text, themeTextStyle, styles.welcomeText]}>
 						This is a {result}
 					</Text>
 					<View style={styles.imageContainer}>
-						<ImageViewer
-							imageSource={require("../assets/" + { result } + ".png")}
-						/>
+						<ImageViewer imageSource={resultImage} />
 					</View>
 					<Text style={[styles.text, themeTextStyle]}>
 						Tap Anywhere to Scan Again!
