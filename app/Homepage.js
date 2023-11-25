@@ -52,11 +52,10 @@ const Home = () =>{
     const [noticeIsActive,setNoticeIsActive] = useState(false);
     const animatedStyles = useAnimatedStyle(()=>{
         return {
-            opacity: isActive? withTiming(1,{duration:800, easing:Easing.inOut(Easing.quad)}):withTiming(0.5),
-            width: isActive? withTiming(400):withTiming(350),
+            width: numInstruction==404? withTiming(400):withTiming(350),
             transform :[
                 {
-                    translateY : isActive? withTiming(-560,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(175),
+                    translateY : numInstruction==404? withTiming(-560,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(175),
                 }
             ]
         }
@@ -70,6 +69,42 @@ const Home = () =>{
             translateY : noticeIsActive? withTiming(0,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(800)
             }
         ]}
+    })
+
+
+    //Animation of each Instruction
+    const [numInstruction,setNumInstruction] = useState(0);
+    const InstructAnimation = useAnimatedStyle(() =>{
+        return{
+            opacity:1,
+            transform:[
+                {
+                translateY : isActive? withTiming(-560,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0)
+                }
+            ]
+        }
+    })
+
+    const fadingupAnimation = useAnimatedStyle(()=>{
+        return{
+            opacity: isActive? withTiming(0,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(1,{duration:400, easing:Easing.inOut(Easing.quad)}),
+            transform:[
+                {
+                    translateY : isActive? withTiming(-500):withTiming(0)
+                }
+            ]
+        }
+    })
+
+    const buttonAnimation = useAnimatedStyle(() =>{
+        return{
+            backgroundColor: isActive? withTiming('rgba(52, 52, 52, 0.8)',{duration:400, easing:Easing.inOut(Easing.quad)}): withTiming("#7AA8AE"),
+            transform: [
+                {
+                    translateY: isActive? withTiming(-160,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0)
+                }
+            ]
+        }
     })
 
     //PageStates
@@ -99,38 +134,38 @@ const Home = () =>{
 
             <MyStatusBar  backgroundColor= {colorsheme=== 'light'? "fffff": "#231f26"}/>
             <Animated.Text style={styles.Title} entering={FadeInUp}>Test Access</Animated.Text>
-            <Text style = {WelcomTextTheme}>Welcome !</Text>
-            <Animated.Image source = {require("../src/image/homepage_image.png")} style= {styles.firstImageStyle}></Animated.Image>  
-            <Text style = {IndicationTextTheme}>Here is a quick guide:</Text>                                                    
+            <Animated.Text style = {[WelcomTextTheme,fadingupAnimation]}>Welcome !</Animated.Text>
+            <Animated.Image source = {require("../src/image/homepage_image.png")} style= {[styles.firstImageStyle, fadingupAnimation]}></Animated.Image>  
+            <Animated.Text style = {[IndicationTextTheme,fadingupAnimation]}>Here is a quick guide:</Animated.Text>                                                    
             <Animated.View style ={[styles.InstructionSet,animatedStyles]}>
-                <View style={styles.InstructionBlock}>
+                <Animated.View style={[styles.InstructionBlock,InstructAnimation]}>
                     <Image source = {require("../src/image/homepage_image.png")} style= {styles.Imagee}></Image>
                     <View style = {styles.InstructionInsideBlock}>
                     <Text style = {styles.InstructionTitle}>Start</Text>
                     <Text style = {styles.InstructionDescription}>Start by clicking on the start button or use text command</Text>
                     </View>
-                </View>
-                <View style={styles.InstructionBlock}>
+                </Animated.View>
+                <Animated.View style={styles.InstructionBlock}>
                     <Image source = {require("../src/image/homepage_image.png")} style= {styles.Imagee}></Image>
                     <View style = {styles.InstructionInsideBlock}>
                     <Text style = {styles.InstructionTitle}>Scan</Text>
                     <Text style = {styles.InstructionDescription}>Take a picture of the covid test by placing it in the middle of the camera</Text>
                     </View>
-                </View>
-                <View style={styles.InstructionBlock}>
+                </Animated.View>
+                <Animated.View style={styles.InstructionBlock}>
                     <Image source = {require("../src/image/homepage_image.png")} style= {styles.Imagee}></Image>
                     <View style = {styles.InstructionInsideBlock}>
                     <Text style = {styles.InstructionTitle}>Analyse</Text>
                     <Text style = {styles.InstructionDescription}>The system will analyse and indicate the result of the test</Text>
                     </View>
-                </View>
+                </Animated.View>
             </Animated.View>
 
-            <View style = {styles.Pressable} >  
+            <Animated.View style = {[styles.Pressable,buttonAnimation]} >  
             <Pressable  onPress={()=>stateTrigger()}  asChild>
                     <Text style={styles.Button}>{pressText}</Text>
             </Pressable>
-            </View>
+            </Animated.View>
             <Animated.View style={[styles.CameraPermissionView,NoticeAnimation]}>
                 <Text style={[WelcomTextTheme, {color : "#7AA8AE"}]}>Notice !</Text>
                 <Animated.View style = {[styles.NoticeText]}>

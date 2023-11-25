@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
 		textAlign: "center",
 		alignSelf: "center", //Scan button allign
 		width: screenWidth * 0.8, // 80% of the screen width
-		height: screenHeight * 0.1, // 10% of the screen height
+		height: screenHeight * 0.08, // 10% of the screen height
 	},
 	Darkmode: {
 		backgroundColor: "#231f26",
