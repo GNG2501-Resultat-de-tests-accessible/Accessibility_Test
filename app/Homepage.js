@@ -77,22 +77,34 @@ const Home = () =>{
     //Animation of Homepage states
     const [firstInstruction,setFirstInstruction] = useState(null);
     const [numInstruction,setNumInstruction] = useState(0);
-    const InstructAnimation = useAnimatedStyle(() =>{
+    const FirstInstructAnimation = useAnimatedStyle(() =>{
         return{
-            opacity:1,
+            opacity:numInstruction==1?withTiming(1):withTiming(0),
             transform:[
                 {
-                translateY : withTiming(-560,{duration:400, easing:Easing.inOut(Easing.quad)})
+                translateY : numInstruction==2? withTiming(-800) : numInstruction==1?withTiming(-560,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0),
                 }
             ]
         }
     })
-    const InstructAnimationExit = useAnimatedStyle(() =>{
+
+    const SecondInstructAnimation = useAnimatedStyle(() =>{
         return{
-            opacity:withTiming(0),
+            opacity:numInstruction==2?withTiming(1):withTiming(0),
             transform:[
                 {
-                translateY : withTiming(-700,{duration:400, easing:Easing.inOut(Easing.quad)})
+                translateY : numInstruction==3? withTiming(-900) : numInstruction==2?withTiming(-760,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0),
+                }
+            ]
+        }
+    })
+
+    const ThirdInstructAnimation = useAnimatedStyle(() =>{
+        return{
+            opacity:numInstruction==3?withTiming(1):withTiming(0),
+            transform:[
+                {
+                translateY : numInstruction==4? withTiming(-900) : numInstruction==3?withTiming(-940,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0),
                 }
             ]
         }
@@ -101,10 +113,10 @@ const Home = () =>{
 
     const fadingupAnimation = useAnimatedStyle(()=>{
         return{
-            opacity: numInstruction==1? withTiming(0,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(1,{duration:400, easing:Easing.inOut(Easing.quad)}),
+            opacity: isActive? withTiming(0,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(1,{duration:400, easing:Easing.inOut(Easing.quad)}),
             transform:[
                 {
-                    translateY : numInstruction==1? withTiming(-500):withTiming(0)
+                    translateY : isActive? withTiming(-500):withTiming(0)
                 }
             ]
         }
@@ -112,10 +124,10 @@ const Home = () =>{
 
     const buttonAnimation = useAnimatedStyle(() =>{
         return{
-            backgroundColor: numInstruction==1? withTiming('rgba(52, 52, 52, 0.8)',{duration:400, easing:Easing.inOut(Easing.quad)}): withTiming("#7AA8AE"),
+            backgroundColor: isActive? withTiming('rgba(52, 52, 52, 0.8)',{duration:400, easing:Easing.inOut(Easing.quad)}): withTiming("#7AA8AE"),
             transform: [
                 {
-                    translateY: numInstruction==1? withTiming(-160,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0)
+                    translateY: isActive? withTiming(-160,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0)
                 }
             ]
         }
@@ -124,14 +136,22 @@ const Home = () =>{
     //PageStates
     function stateTrigger() {
         if (numInstruction==0) {
-            setPressText("Start");
             setIsActive(!isActive);
             setNumInstruction(1);
-            setFirstInstruction(InstructAnimation);
+            setFirstInstruction(FirstInstructAnimation);
         }
         if(numInstruction==1){
             console.log("w");
-            setFirstInstruction(InstructAnimationExit)
+            setNumInstruction(2);
+        }
+        if(numInstruction==2){
+            console.log("w");
+            setNumInstruction(3);
+        }
+        if(numInstruction==3){
+            setPressText("Start");
+            router.push("./Scanpage")
+            setNumInstruction(4);
         }
     }
 
@@ -150,21 +170,21 @@ const Home = () =>{
 
 
             <Animated.View style ={[styles.InstructionSet,animatedStyles]}>
-                <Animated.View style={[styles.InstructionBlock,firstInstruction,Themes.Container]}>
+                <Animated.View style={[styles.InstructionBlock,FirstInstructAnimation,Themes.Container]}>
                     <Image source = {require("../src/image/homepage_image.png")} style= {styles.Imagee}></Image>
                     <View style = {[styles.InstructionInsideBlock,Themes.bg]}>
                     <Text style = {styles.InstructionTitle}>Start</Text>
                     <Text style = {[styles.InstructionDescription,Themes.Text]}>Start by clicking on the start button or use text command</Text>
                     </View>
                 </Animated.View>
-                <Animated.View style={styles.InstructionBlock}>
+                <Animated.View style={[styles.InstructionBlock,SecondInstructAnimation]}>
                     <Image source = {require("../src/image/homepage_image.png")} style= {styles.Imagee}></Image>
                     <View style = {styles.InstructionInsideBlock}>
                     <Text style = {styles.InstructionTitle}>Scan</Text>
                     <Text style = {[styles.InstructionDescription,Themes.Text]}>Take a picture of the covid test by placing it in the middle of the camera</Text>
                     </View>
                 </Animated.View>
-                <Animated.View style={styles.InstructionBlock}>
+                <Animated.View style={[styles.InstructionBlock,ThirdInstructAnimation]}>
                     <Image source = {require("../src/image/homepage_image.png")} style= {styles.Imagee}></Image>
                     <View style = {styles.InstructionInsideBlock}>
                     <Text style = {styles.InstructionTitle}>Analyse</Text>
