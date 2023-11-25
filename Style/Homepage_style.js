@@ -46,48 +46,35 @@ const styles = StyleSheet.create({
 		width: screenWidth * 0.8, // 80% of the screen width
 		height: screenHeight * 0.08, // 10% of the screen height
 	},
-	Darkmode: {
+	Backgound: {
 		backgroundColor: "#231f26",
 		zIndex:0,
 		height: screenHeight, //for some reason the safeareaview dosn't cover all the screen
 	},
-	Lightmode: {
-		backgroundColor: "#ffffff",
-		height: screenHeight,
-	},
-	WelcomeLight: {
-		fontFamily: "pBold",
-		marginTop: 20,
-		fontSize: 27,
-	},
-	WelcomeDark: {
+	Welcome: {
 		fontFamily: "pBold",
 		alignSelf: "center",
 		marginTop: 20,
 		fontSize: 27,
-		color: "#ffffff",
 	},
-	ClickonLight: {
-		color: "#000000",
-	},
-	ClickonDark: {
+	Guide: {
 		color: "#ffffff",
 		alignSelf: "center",
 		fontSize: 20,
 		fontFamily: "pMedium",
 	},
 	InstructionBlock: {
-		backgroundColor: "#252936",
+		borderColor:"#000000",
+		borderWidth: 1,
 		alignContent: "center",
 		borderRadius: 10,
 		marginTop: 20,
-		width: 330,
+		width: 350,
 		height: 180,
 		flexDirection: "row",
 	},
 	InstructionSet: {
 		justifyContent: "center",
-		backgroundColor: "#151317",
 		zIndex: 1,
 		position: "absolute",
 		marginTop: 620,

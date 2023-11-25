@@ -42,13 +42,15 @@ const Home = () =>{
 
     //Dark and Light Theme Handler
     let colorsheme = useColorScheme();
-    let ContainerTheme = colorsheme ==='light'? styles.Lightmode : styles.Darkmode; //theme of the viewpage
-    let WelcomTextTheme = colorsheme ==='light'? styles.WelcomeLight : styles.WelcomeDark; //Theme of Welcome Text
-    let IndicationTextTheme = colorsheme ==='light'? styles.ClickonLight : styles.ClickonDark; // Indication Text Theme
+    let bgcolor =colorsheme ==='light'?"#ffffff": "#231f26"; //Theme of the bg color
+    let textTheme = colorsheme=='light'? "#000000":"#ffffff"; //Theme of every text
+    let ContainerTheme =colorsheme=='light'? '#e8e8e8':"#252936";
+    let Themes = StyleSheet.create({bg: {backgroundColor:bgcolor}, Text:{color: textTheme}, Container : {backgroundColor: ContainerTheme}})
 
 
     //Switch to Instructions Handler
     const [isActive, setIsActive] = useState(false);
+    const [stateNum,setStateNum] = useState(0);
     const [noticeIsActive,setNoticeIsActive] = useState(false);
     const animatedStyles = useAnimatedStyle(()=>{
         return {
@@ -72,25 +74,37 @@ const Home = () =>{
     })
 
 
-    //Animation of each Instruction
+    //Animation of Homepage states
+    const [firstInstruction,setFirstInstruction] = useState(null);
     const [numInstruction,setNumInstruction] = useState(0);
     const InstructAnimation = useAnimatedStyle(() =>{
         return{
             opacity:1,
             transform:[
                 {
-                translateY : isActive? withTiming(-560,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0)
+                translateY : withTiming(-560,{duration:400, easing:Easing.inOut(Easing.quad)})
+                }
+            ]
+        }
+    })
+    const InstructAnimationExit = useAnimatedStyle(() =>{
+        return{
+            opacity:withTiming(0),
+            transform:[
+                {
+                translateY : withTiming(-700,{duration:400, easing:Easing.inOut(Easing.quad)})
                 }
             ]
         }
     })
 
+
     const fadingupAnimation = useAnimatedStyle(()=>{
         return{
-            opacity: isActive? withTiming(0,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(1,{duration:400, easing:Easing.inOut(Easing.quad)}),
+            opacity: numInstruction==1? withTiming(0,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(1,{duration:400, easing:Easing.inOut(Easing.quad)}),
             transform:[
                 {
-                    translateY : isActive? withTiming(-500):withTiming(0)
+                    translateY : numInstruction==1? withTiming(-500):withTiming(0)
                 }
             ]
         }
@@ -98,10 +112,10 @@ const Home = () =>{
 
     const buttonAnimation = useAnimatedStyle(() =>{
         return{
-            backgroundColor: isActive? withTiming('rgba(52, 52, 52, 0.8)',{duration:400, easing:Easing.inOut(Easing.quad)}): withTiming("#7AA8AE"),
+            backgroundColor: numInstruction==1? withTiming('rgba(52, 52, 52, 0.8)',{duration:400, easing:Easing.inOut(Easing.quad)}): withTiming("#7AA8AE"),
             transform: [
                 {
-                    translateY: isActive? withTiming(-160,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0)
+                    translateY: numInstruction==1? withTiming(-160,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0)
                 }
             ]
         }
@@ -109,19 +123,15 @@ const Home = () =>{
 
     //PageStates
     function stateTrigger() {
-        if (!isActive) {
+        if (numInstruction==0) {
             setPressText("Start");
             setIsActive(!isActive);
+            setNumInstruction(1);
+            setFirstInstruction(InstructAnimation);
         }
-        else{
-            //setNoticeIsActive(true);
-            if (!noticeIsActive) {
-                setNoticeIsActive(true);
-            }
-            else{
-                router.push("/Scanpage");
-            }
-            
+        if(numInstruction==1){
+            console.log("w");
+            setFirstInstruction(InstructAnimationExit)
         }
     }
 
@@ -130,33 +140,35 @@ const Home = () =>{
 
     // this represents the code of the first page(Home page) of the app
     return(
-            <GestureHandlerRootView onStartShouldSetResponder={DoubleTap} style = {ContainerTheme}>
-
-            <MyStatusBar  backgroundColor= {colorsheme=== 'light'? "fffff": "#231f26"}/>
+            <GestureHandlerRootView onStartShouldSetResponder={DoubleTap} style = {[styles.Backgound,Themes.bg]}>
+            <MyStatusBar  backgroundColor= {colorsheme=== 'light'? "#ffffff": "#231f26"}/>
             <Animated.Text style={styles.Title} entering={FadeInUp}>Test Access</Animated.Text>
-            <Animated.Text style = {[WelcomTextTheme,fadingupAnimation]}>Welcome !</Animated.Text>
+            <Animated.Text style = {[styles.Welcome,fadingupAnimation,Themes.Text]}>Welcome !</Animated.Text>
             <Animated.Image source = {require("../src/image/homepage_image.png")} style= {[styles.firstImageStyle, fadingupAnimation]}></Animated.Image>  
-            <Animated.Text style = {[IndicationTextTheme,fadingupAnimation]}>Here is a quick guide:</Animated.Text>                                                    
+            <Animated.Text style = {[styles.Guide,fadingupAnimation,Themes.Text]}>Here is a quick guide:</Animated.Text>   
+
+
+
             <Animated.View style ={[styles.InstructionSet,animatedStyles]}>
-                <Animated.View style={[styles.InstructionBlock,InstructAnimation]}>
+                <Animated.View style={[styles.InstructionBlock,firstInstruction,Themes.Container]}>
                     <Image source = {require("../src/image/homepage_image.png")} style= {styles.Imagee}></Image>
-                    <View style = {styles.InstructionInsideBlock}>
+                    <View style = {[styles.InstructionInsideBlock,Themes.bg]}>
                     <Text style = {styles.InstructionTitle}>Start</Text>
-                    <Text style = {styles.InstructionDescription}>Start by clicking on the start button or use text command</Text>
+                    <Text style = {[styles.InstructionDescription,Themes.Text]}>Start by clicking on the start button or use text command</Text>
                     </View>
                 </Animated.View>
                 <Animated.View style={styles.InstructionBlock}>
                     <Image source = {require("../src/image/homepage_image.png")} style= {styles.Imagee}></Image>
                     <View style = {styles.InstructionInsideBlock}>
                     <Text style = {styles.InstructionTitle}>Scan</Text>
-                    <Text style = {styles.InstructionDescription}>Take a picture of the covid test by placing it in the middle of the camera</Text>
+                    <Text style = {[styles.InstructionDescription,Themes.Text]}>Take a picture of the covid test by placing it in the middle of the camera</Text>
                     </View>
                 </Animated.View>
                 <Animated.View style={styles.InstructionBlock}>
                     <Image source = {require("../src/image/homepage_image.png")} style= {styles.Imagee}></Image>
                     <View style = {styles.InstructionInsideBlock}>
                     <Text style = {styles.InstructionTitle}>Analyse</Text>
-                    <Text style = {styles.InstructionDescription}>The system will analyse and indicate the result of the test</Text>
+                    <Text style = {[styles.InstructionDescription,Themes.Text]}>The system will analyse and indicate the result of the test</Text>
                     </View>
                 </Animated.View>
             </Animated.View>
@@ -166,8 +178,10 @@ const Home = () =>{
                     <Text style={styles.Button}>{pressText}</Text>
             </Pressable>
             </Animated.View>
+
+            
             <Animated.View style={[styles.CameraPermissionView,NoticeAnimation]}>
-                <Text style={[WelcomTextTheme, {color : "#7AA8AE"}]}>Notice !</Text>
+                <Text style={[styles.Welcome, {color : "#7AA8AE"}]}>Notice !</Text>
                 <Animated.View style = {[styles.NoticeText]}>
                     <Text style ={[styles.InstructionDescription,{margin : 40},{textAlign: "center"}]}>This appliction needs Camera permission</Text>
                     <Pressable style = {[styles.NoticeButton,{position : "relative"}]}>
