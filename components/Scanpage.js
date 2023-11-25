@@ -110,7 +110,12 @@ export default function Scan() {
 				onPress={handleImageCapture}
 				activeOpacity={1.0}
 			>
-				<Camera ref={cameraRef} type={type} style={styles.cameraStyle}>
+				<Camera
+					ref={cameraRef}
+					type={type}
+					style={styles.cameraStyle}
+					focusDepth={1}
+				>
 					<View style={{ flex: 1, backgroundColor: "transparent" }} />
 				</Camera>
 			</TouchableOpacity>
