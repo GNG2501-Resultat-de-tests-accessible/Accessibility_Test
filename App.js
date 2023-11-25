@@ -4,6 +4,7 @@ import { useColorScheme } from "react-native";
 
 import Scan from "./components/Scanpage";
 import HomeScreen from "./components/HomeScreen";
+import Result from "./components/ResultPage";
 
 const Stack = createStackNavigator();
 
@@ -32,6 +33,15 @@ export default function App() {
 					component={Scan}
 					options={{
 						title: "Scan",
+						headerStyle,
+						headerTintColor,
+					}}
+				/>
+				<Stack.Screen
+					name='Result'
+					component={Result}
+					options={{
+						title: "Result",
 						headerStyle,
 						headerTintColor,
 					}}

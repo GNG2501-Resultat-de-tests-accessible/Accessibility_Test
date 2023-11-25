@@ -43,7 +43,7 @@ export default function HomeScreen() {
 					</Text>
 					<View style={styles.imageContainer}>
 						<ImageViewer
-							homepageImageSource={require("../assets/homepage_image.png")}
+							imageSource={require("../assets/homepage_image.png")}
 						/>
 					</View>
 					<Text style={[styles.text, themeTextStyle]}>

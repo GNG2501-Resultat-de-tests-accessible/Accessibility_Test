@@ -1,18 +1,9 @@
-import {
-	Text,
-	SafeAreaView,
-	View,
-	Button,
-	TouchableOpacity,
-	ActivityIndicator,
-	StyleSheet,
-} from "react-native";
+import { Text, View, Button, TouchableOpacity, StyleSheet } from "react-native";
 import { Camera, CameraType } from "expo-camera";
 import { Image, useColorScheme } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import React, { useRef, useState } from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import { useNavigation } from "@react-navigation/native";
 import {
 	getModel,
 	convertBase64ToTensor,
@@ -24,6 +15,7 @@ import { normalize } from "../utils/utils";
 const RESULT_MAPPING = ["Positive COVID Test", "Negative COVID Test"];
 
 export default function Scan() {
+	const navigation = useNavigation();
 	const colorScheme = useColorScheme();
 	const themeTextStyle =
 		colorScheme === "light" ? styles.lightThemeText : styles.darkThemeText;
@@ -57,12 +49,15 @@ export default function Scan() {
 		const model = await getModel();
 		const tensor = await convertBase64ToTensor(croppedDate.base64);
 		const prediction = await startPrediction(model, tensor);
-		console.log("prediction", prediction);
+		//console.log("prediction", prediction);
 		const highestPrediction = prediction.indexOf(
 			Math.max.apply(null, prediction)
 		);
 		setResult(RESULT_MAPPING[highestPrediction]);
-		console.log("result", RESULT_MAPPING[highestPrediction]);
+		navigation.navigate("Result", {
+			result: RESULT_MAPPING[highestPrediction],
+		});
+		//console.log("result", RESULT_MAPPING[highestPrediction]);
 	};
 
 	//Camera hooks
