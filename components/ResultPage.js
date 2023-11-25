@@ -24,8 +24,17 @@ export default function Result({ route }) {
 	const themeContainerStyle =
 		colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
 
+	const handleTap = () => {
+		console.log("Screen Tapped");
+		navigation.navigate("Scan");
+	};
+
 	return (
-		<TouchableOpacity style={styles.touchableOpacityStyle} activeOpacity={1.0}>
+		<TouchableOpacity
+			style={styles.touchableOpacityStyle}
+			activeOpacity={1.0}
+			onPress={handleTap}
+		>
 			<View style={[styles.container, themeContainerStyle]}>
 				<SafeAreaView style={styles.iosSafeArea}>
 					<Text style={[styles.text, themeTextStyle, styles.welcomeText]}>
@@ -69,6 +78,7 @@ const styles = StyleSheet.create({
 	text: {
 		fontSize: normalize(20),
 		fontWeight: "bold",
+		textAlign: "center",
 	},
 	welcomeText: {
 		fontSize: normalize(40),
