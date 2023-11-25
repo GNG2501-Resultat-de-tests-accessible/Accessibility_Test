@@ -87,16 +87,10 @@ export default function Scan() {
 	}
 	return (
 		<View style={[styles.container, themeContainerStyle]}>
-			<SafeAreaView style={styles.iosSafeArea}>
-				<TouchableOpacity style={{ flex: 1 }} onPress={handleImageCapture}>
-					<Camera
-						ref={cameraRef}
-						type={type}
-						style={styles.cameraStyle}
-					></Camera>
-				</TouchableOpacity>
-				<StatusBar style='auto' />
-			</SafeAreaView>
+			<TouchableOpacity style={{ flex: 1 }} onPress={handleImageCapture}>
+				<Camera ref={cameraRef} type={type} style={styles.cameraStyle}></Camera>
+			</TouchableOpacity>
+			<StatusBar style='auto' />
 		</View>
 	);
 }
