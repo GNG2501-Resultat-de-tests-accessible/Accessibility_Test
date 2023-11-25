@@ -5,6 +5,26 @@ import styles from "../Style/Homepage_style";
 import { StatusBar } from "expo-status-bar";
 
 const Result = () =>{
+
+    //Double Tap Function on an Html element
+    let lastpress = 0; // last time tap
+    const DoubleTap = () =>{                    //DoubleTap function that detects double press in the middle of the screen
+        const time = new Date().getTime(); //Get Time Press
+        const delta = time - lastpress;
+        const delay = 400; //Press Delay
+        if (delta < delay) {
+            console.log("doubleTap");
+            stateTrigger();
+        }
+        lastpress = time;
+    }
+    //
+
+    function stateTrigger(){
+        
+    }
+
+
     let colorsheme = useColorScheme();
     let ContainerTheme = colorsheme ==='light'? ResultStyle.Lightmode : ResultStyle.Darkmode;
     return(

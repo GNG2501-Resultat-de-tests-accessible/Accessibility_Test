@@ -35,7 +35,7 @@ const Scan = () => {
 	const [loading, setLoading] = useState(false);
 	const [image, setImage] = useState(null);
 
-	const handleImageCapture = async () => {
+	async function handleImageCapture () {
 		if (loading) return;
 		setLoading(true);
 		console.log("Image Taken");
@@ -79,6 +79,26 @@ const Scan = () => {
 			: ScanStyle.StatuesBarDark;
 	console.log(permission);
 
+
+
+	//Double Tap Function on an Html element
+    let lastpress = 0; // last time tap
+    const DoubleTap = () =>{                    //DoubleTap function that detects double press in the middle of the screen
+        const time = new Date().getTime(); //Get Time Press
+        const delta = time - lastpress;
+        const delay = 400; //Press Delay
+        if (delta < delay) {
+            console.log("doubleTap");
+            stateTrigger();
+        }
+        lastpress = time;
+    }
+    //
+
+    function stateTrigger(){
+        handleImageCapture();
+    }
+
 	if (!permission) {
 		// Camera permissions are still loading
 		return <View />;
@@ -95,7 +115,7 @@ const Scan = () => {
 		);
 	}
 	return (
-		<SafeAreaView style={ContainerTheme}>
+		<SafeAreaView style={ContainerTheme} onStartShouldSetResponder={DoubleTap}>
 			<StatusBar
 				backgroundColor={colorsheme === "light" ? "fffff" : "#231f26"}
 			></StatusBar>
@@ -104,7 +124,7 @@ const Scan = () => {
 				<Text style={ScanStyle.ScanText}>Scan the Test</Text>
 			</SafeAreaView>
 			<SafeAreaView style={ScanStyle.ContainingBox} />
-			<SafeAreaView style={ScanStyle.CamArea}>
+			<SafeAreaView style={ScanStyle.CamArea} >
 				{image ? (
 					<View style={{ flex: 1 }}>
 						<Image source={{ uri: image }} style={{ flex: 1 }} />
@@ -121,23 +141,24 @@ const Scan = () => {
 						)}
 					</View>
 				) : (
-					<TouchableOpacity
-						style={{ flex: 1 }}
-						activeOpacity={1}
-						onPress={handleImageCapture}
-					>
-						<Camera
+					
+					<TouchableOpacity style={{ flex:1 }}
+					activeOpacity={1.0} onPress={() =>console.log("pressed")}>
+						<Camera 
 							ref={cameraRef}
 							style={ScanStyle.CameraStyle}
 							type={type}
 						></Camera>
-					</TouchableOpacity>
+						</TouchableOpacity>
 				)}
-				<Link
-					href='/Resultpage'
-					style={[styles.Pressable, { top: "90%" }]}
+				<View
+					style={[styles.Pressable, { top: 560 }]}
 					asChild
-				></Link>
+				>
+					<Pressable onPress={() =>handleImageCapture()} >
+						<Text style = {styles.Button}>Scan</Text>
+					</Pressable>
+				</View>
 			</SafeAreaView>
 		</SafeAreaView>
 	);

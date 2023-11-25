@@ -7,7 +7,7 @@ const ScanStyle = StyleSheet.create({
 	Scanning: {
 		justifyContent: "center",
 		alignItems: "center",
-		marginTop: 30,
+		marginTop: 150,
 	},
 	ScanText: {
 		fontFamily: "pBold",
@@ -48,7 +48,6 @@ const ScanStyle = StyleSheet.create({
 		backgroundColor: "#231f26",
 	},
 	ContainingBox: {
-		backgroundColor: "#151317",
 		position: "absolute",
 		width: "100%",
 		height: "100%",
@@ -57,8 +56,10 @@ const ScanStyle = StyleSheet.create({
 	},
 	CameraStyle: {
 		flex: 1,
-		width: "100%",
-		maxHeight: "100%",
+		alignSelf: "center",
+		width: 400,
+		maxHeight: 600,
+		marginTop: 20
 	},
 });
 export default ScanStyle;

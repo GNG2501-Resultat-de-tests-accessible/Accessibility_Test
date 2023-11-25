@@ -177,16 +177,16 @@ const Home = () =>{
                     <Text style = {[styles.InstructionDescription,Themes.Text]}>Start by clicking on the start button or use text command</Text>
                     </View>
                 </Animated.View>
-                <Animated.View style={[styles.InstructionBlock,SecondInstructAnimation]}>
+                <Animated.View style={[styles.InstructionBlock,SecondInstructAnimation,Themes.Container]}>
                     <Image source = {require("../src/image/homepage_image.png")} style= {styles.Imagee}></Image>
-                    <View style = {styles.InstructionInsideBlock}>
+                    <View style = {[styles.InstructionInsideBlock,Themes.bg]}>
                     <Text style = {styles.InstructionTitle}>Scan</Text>
                     <Text style = {[styles.InstructionDescription,Themes.Text]}>Take a picture of the covid test by placing it in the middle of the camera</Text>
                     </View>
                 </Animated.View>
-                <Animated.View style={[styles.InstructionBlock,ThirdInstructAnimation]}>
+                <Animated.View style={[styles.InstructionBlock,ThirdInstructAnimation,Themes.Container]}>
                     <Image source = {require("../src/image/homepage_image.png")} style= {styles.Imagee}></Image>
-                    <View style = {styles.InstructionInsideBlock}>
+                    <View style = {[styles.InstructionInsideBlock,Themes.bg]}>
                     <Text style = {styles.InstructionTitle}>Analyse</Text>
                     <Text style = {[styles.InstructionDescription,Themes.Text]}>The system will analyse and indicate the result of the test</Text>
                     </View>
