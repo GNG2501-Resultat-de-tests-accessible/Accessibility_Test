@@ -72,7 +72,7 @@ export default function Scan() {
 		navigation.navigate("Result", {
 			result: RESULT_MAPPING[highestPrediction],
 		});
-		//console.log("result", RESULT_MAPPING[highestPrediction]);
+		console.log("result", RESULT_MAPPING[highestPrediction]);
 	};
 
 	//Camera hooks
