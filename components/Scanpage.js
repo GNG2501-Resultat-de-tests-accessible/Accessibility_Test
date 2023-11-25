@@ -5,6 +5,7 @@ import {
 	TouchableOpacity,
 	StyleSheet,
 	ActivityIndicator,
+	Modal,
 } from "react-native";
 import { Camera, CameraType } from "expo-camera";
 import { Image, useColorScheme } from "react-native";
@@ -28,6 +29,13 @@ export default function Scan() {
 		colorScheme === "light" ? styles.lightThemeText : styles.darkThemeText;
 	const themeContainerStyle =
 		colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
+	const themeModalStyle =
+		colorScheme === "light" ? styles.lightModalView : styles.darkModalView;
+	const themeModalTextStyle =
+		colorScheme === "light"
+			? styles.lightThemeModalText
+			: styles.darkThemeModalText;
+	const themeSpinnerStyle = colorScheme === "light" ? "#231f26" : "#fff";
 
 	//Model Stuff
 
@@ -89,34 +97,23 @@ export default function Scan() {
 	}
 	return (
 		<View style={[styles.container, themeContainerStyle]}>
-			{loading ? (
-				<ActivityIndicator size='large' color='#0000ff' />
-			) : image ? (
-				<View style={{ flex: 1 }}>
-					<Image source={{ uri: image }} style={{ flex: 1 }} />
-					{loading && (
-						<ActivityIndicator
-							size='large'
-							color='#0000ff'
-							style={{
-								position: "absolute",
-								top: "50%",
-								left: "50%",
-							}}
-						/>
-					)}
+			<Modal animationType='slide' transparent={true} visible={loading}>
+				<View style={styles.centeredView}>
+					<View style={themeModalStyle}>
+						<ActivityIndicator size='large' color={themeSpinnerStyle} />
+						<Text style={themeModalTextStyle}>Processing...</Text>
+					</View>
 				</View>
-			) : (
-				<TouchableOpacity
-					style={{ flex: 1 }}
-					onPress={handleImageCapture}
-					activeOpacity={1.0}
-				>
-					<Camera ref={cameraRef} type={type} style={styles.cameraStyle}>
-						<View style={{ flex: 1, backgroundColor: "transparent" }} />
-					</Camera>
-				</TouchableOpacity>
-			)}
+			</Modal>
+			<TouchableOpacity
+				style={{ flex: 1 }}
+				onPress={handleImageCapture}
+				activeOpacity={1.0}
+			>
+				<Camera ref={cameraRef} type={type} style={styles.cameraStyle}>
+					<View style={{ flex: 1, backgroundColor: "transparent" }} />
+				</Camera>
+			</TouchableOpacity>
 			<StatusBar style='auto' />
 		</View>
 	);
@@ -140,7 +137,6 @@ const styles = StyleSheet.create({
 	},
 	imageContainer: {
 		borderWidth: 4,
-		borderColor: "#ff0000",
 	},
 	iosSafeArea: {
 		flex: 1,
@@ -161,5 +157,51 @@ const styles = StyleSheet.create({
 	cameraStyle: {
 		flex: 1,
 		width: "100%",
+	},
+	centeredView: {
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center",
+		marginTop: 22,
+	},
+	lightModalView: {
+		margin: 20,
+		backgroundColor: "#fff",
+		borderRadius: 20,
+		padding: 35,
+		alignItems: "center",
+		shadowColor: "#000",
+		shadowOffset: {
+			width: 0,
+			height: 2,
+		},
+		shadowOpacity: 0.25,
+		shadowRadius: 4,
+		elevation: 5,
+	},
+	lightThemeModalText: {
+		marginTop: 15,
+		textAlign: "center",
+		color: "#231f26",
+	},
+	darkModalView: {
+		margin: 20,
+		backgroundColor: "#231f26",
+		borderRadius: 20,
+		padding: 35,
+		alignItems: "center",
+		shadowColor: "#000",
+		shadowOffset: {
+			width: 0,
+			height: 2,
+		},
+		shadowOpacity: 0.25,
+		shadowRadius: 4,
+		elevation: 5,
+	},
+	darkThemeModalText: {
+		marginTop: 15,
+		textAlign: "center",
+		color: "#fff",
 	},
 });
