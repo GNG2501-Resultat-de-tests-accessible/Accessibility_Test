@@ -20,7 +20,11 @@ import {
 import { cropPicture } from "../helpers/image-helper.js";
 import { normalize } from "../utils/utils";
 
-const RESULT_MAPPING = ["Positive COVID Test", "Negative COVID Test"];
+const RESULT_MAPPING = [
+	"Positive COVID Test",
+	"Negative COVID Test",
+	"Inconclusive COVID Test",
+];
 
 export default function Scan() {
 	const navigation = useNavigation();
@@ -64,7 +68,7 @@ export default function Scan() {
 		const model = await getModel();
 		const tensor = await convertBase64ToTensor(croppedDate.base64);
 		const prediction = await startPrediction(model, tensor);
-		//console.log("prediction", prediction);
+		console.log("prediction", prediction);
 		const highestPrediction = prediction.indexOf(
 			Math.max.apply(null, prediction)
 		);

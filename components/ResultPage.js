@@ -13,10 +13,16 @@ import ImageViewer from "./ImageViewer";
 
 export default function Result({ route }) {
 	const { result } = route.params;
-	const resultImage =
-		result === "Positive COVID Test"
-			? require("../assets/positive.png")
-			: require("../assets/negative.png");
+
+	let resultImage;
+	if (result === "Positive COVID Test") {
+		resultImage = require("../assets/positive.png");
+	} else if (result === "Negative COVID Test") {
+		resultImage = require("../assets/negative.png");
+	} else if (result === "Inconclusive COVID Test") {
+		resultImage = require("../assets/inconclusive.png");
+	}
+
 	const navigation = useNavigation();
 	const colorScheme = useColorScheme();
 	const themeTextStyle =
@@ -44,7 +50,9 @@ export default function Result({ route }) {
 						<ImageViewer imageSource={resultImage} />
 					</View>
 					<Text style={[styles.text, themeTextStyle]}>
-						Tap Anywhere to Scan Again!
+						{result === "Inconclusive COVID Test"
+							? "Please tap and retake the picture!"
+							: "Tap Anywhere to Scan Again!"}
 					</Text>
 					<StatusBar style='auto' />
 				</SafeAreaView>
