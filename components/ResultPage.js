@@ -50,9 +50,7 @@ export default function Result({ route }) {
 						<ImageViewer imageSource={resultImage} />
 					</View>
 					<Text style={[styles.text, themeTextStyle]}>
-						{result === "Inconclusive COVID Test"
-							? "Please tap and retake the picture!"
-							: "Tap Anywhere to Scan Again!"}
+						Please tap and retake the picture!
 					</Text>
 					<StatusBar style='auto' />
 				</SafeAreaView>
