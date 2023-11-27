@@ -62,6 +62,7 @@ const Scan = () => {
 		);
 		setResult(RESULT_MAPPING[highestPrediction]);
 		console.log("result", RESULT_MAPPING[highestPrediction]);
+		router.push("./Resultpage")
 	};
 
 	//Camera hooks
@@ -127,28 +128,33 @@ const Scan = () => {
 			<SafeAreaView style={ScanStyle.CamArea} >
 				{image ? (
 					<View style={{ flex: 1 }}>
-						<Image source={{ uri: image }} style={{ flex: 1 }} />
+						<Image source={{ uri: image }} style={{ flex: 1, width:400, maxHeight:600, alignSelf: "center" }} />
 						{loading && (
 							<ActivityIndicator
 								size='large'
 								color='#0000ff'
 								style={{
 									position: "absolute",
-									top: "50%",
-									left: "50%",
+									flex:1,
+									alignSelf:"center",
+									justifyContent: "center",
+									top: 300
 								}}
 							/>
 						)}
 					</View>
 				) : (
 					
-					<TouchableOpacity style={{ flex:1 }}
+					<TouchableOpacity style={{ flex:1,}}
 					activeOpacity={1.0} onPress={() =>console.log("pressed")}>
 						<Camera 
+						onStartShouldSetResponder={DoubleTap}
 							ref={cameraRef}
 							style={ScanStyle.CameraStyle}
 							type={type}
-						></Camera>
+						>
+							<View style={{ flex: 1, backgroundColor: "transparent" }} />
+						</Camera>
 						</TouchableOpacity>
 				)}
 				<View

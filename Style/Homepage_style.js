@@ -18,9 +18,10 @@ const styles = StyleSheet.create({
 		fontSize: 27,
 	},
 	Imagee: {
-		width: 130,
-		height: 130,
+		width: screenWidth*0.3,
 		alignSelf: "center",
+		height:screenHeight*0.1,
+		
 	},
 
 	Button: {
@@ -64,51 +65,23 @@ const styles = StyleSheet.create({
 		fontFamily: "pMedium",
 	},
 	InstructionBlock: {
-		borderColor:"#000000",
-		borderWidth: 1,
-		alignContent: "center",
-		borderRadius: 10,
-		marginTop: 20,
-		width: 350,
-		height: 180,
 		flexDirection: "row",
-	},
-	InstructionSet: {
-		justifyContent: "center",
-		zIndex: 1,
-		position: "absolute",
-		marginTop: 620,
-		height: 670,
-		width: "100%",
-		borderRadius: 50,
-		alignSelf: "center",
-		alignItems: "center",
+		alignSelf : "center",
+		borderRadius:15,
+		borderColor: "#000000",
+		borderWidth: 1
 		
 	},
-	InstructionSetActive: {
-		justifyContent: "center",
-		backgroundColor: "#151317",
-		zIndex: 1,
-		position: "absolute",
-		marginTop: 0,
-		height: 800,
-		width: "98%",
-		borderRadius: 20,
-		justifyContent: "center",
-		alignItems: "center",
-		marginLeft: "auto",
-		marginRight: "auto",
-	},
+	
 	InstructionTitle: {
-		marginLeft: 20,
-		marginTop: 25,
 		fontSize: 20,
 		fontFamily: "pBold",
 		color: "#7AA8AE",
 	},
 	InstructionDescription: {
-		marginLeft: 20,
+
 		alignItems: "center",
+		margin:10,
 		fontSize: 15,
 		fontFamily: "pMedium",
 		color: "#ffffff",
@@ -116,9 +89,8 @@ const styles = StyleSheet.create({
 	InstructionInsideBlock: {
 		backgroundColor: "#1a1d26",
 		alignItems: "center",
-		borderRadius: 10,
-		width: 200,
-		marginLeft: 10,
+		fontSize:25,
+		borderRadius: 15,
 	},
 	ScrollViewStyle: {
 		height: 200,
@@ -127,6 +99,7 @@ const styles = StyleSheet.create({
 		width: 300,
 		height: 300,
 		margin: 20,
+		marginTop: screenHeight*0.1,
 		alignSelf: "center",
 	},
 
@@ -160,6 +133,21 @@ const styles = StyleSheet.create({
 		textAlign: "center",
 		alignSelf: "center",
 	},
+	TestView : {
+		alignSelf:"center",
+		position:"absolute",
+		alignItems: "center",
+		top: screenHeight*1.1,
+		borderRadius:15,
+		width: screenWidth*0.6,
+		height: screenHeight*0.3,
+	},
+	ImageContainer : {
+		width:screenWidth*0.3,
+		height:screenHeight*0.2,
+		alignContent:"center",
+		justifyContent:"center",
+	}
 });
 
 export default styles;

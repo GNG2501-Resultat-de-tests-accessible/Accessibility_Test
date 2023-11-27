@@ -1,4 +1,4 @@
-import { Text, SafeAreaView, View } from "react-native";
+import { Text, SafeAreaView, View, Dimensions } from "react-native";
 import styles from "../Style/Homepage_style.js";
 import layout_styles from "../Style/Layoutstyle.js";
 import { Image, Button, Pressable, Appearance, useColorScheme, StatusBar, StyleSheet } from "react-native";
@@ -10,7 +10,9 @@ import { useState } from "react";
 import { BlurView } from "expo-blur";
 
 const Home = () =>{
-
+    //Screen Width and Height 
+    const screenWidth = Dimensions.get("window").width;
+    const screenHeight = Dimensions.get("window").height;
     //Status bar check
     const STATUSBAR_HEIGHT = StatusBar.currentHeight;
     const MyStatusBar = ({backgroundColor, ...props}) => (
@@ -82,7 +84,7 @@ const Home = () =>{
             opacity:numInstruction==1?withTiming(1):withTiming(0),
             transform:[
                 {
-                translateY : numInstruction==2? withTiming(-800) : numInstruction==1?withTiming(-560,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0),
+                translateY : numInstruction==2? withTiming(-800) : numInstruction==1?withTiming(-screenHeight*0.7,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0),
                 }
             ]
         }
@@ -93,7 +95,7 @@ const Home = () =>{
             opacity:numInstruction==2?withTiming(1):withTiming(0),
             transform:[
                 {
-                translateY : numInstruction==3? withTiming(-900) : numInstruction==2?withTiming(-760,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0),
+                translateY : numInstruction==3? withTiming(-900) : numInstruction==2?withTiming(-screenHeight*0.7,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0),
                 }
             ]
         }
@@ -104,7 +106,7 @@ const Home = () =>{
             opacity:numInstruction==3?withTiming(1):withTiming(0),
             transform:[
                 {
-                translateY : numInstruction==4? withTiming(-900) : numInstruction==3?withTiming(-940,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0),
+                translateY : numInstruction==4? withTiming(-900) : numInstruction==3?withTiming(-screenHeight*0.7,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0),
                 }
             ]
         }
@@ -127,7 +129,7 @@ const Home = () =>{
             backgroundColor: isActive? withTiming('rgba(52, 52, 52, 0.8)',{duration:400, easing:Easing.inOut(Easing.quad)}): withTiming("#7AA8AE"),
             transform: [
                 {
-                    translateY: isActive? withTiming(-160,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0)
+                    translateY: isActive? withTiming(-screenHeight*0.1,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0)
                 }
             ]
         }
@@ -169,29 +171,42 @@ const Home = () =>{
 
 
 
-            <Animated.View style ={[styles.InstructionSet,animatedStyles]}>
-                <Animated.View style={[styles.InstructionBlock,FirstInstructAnimation,Themes.Container]}>
+                <Animated.View style={[styles.TestView,,FirstInstructAnimation]}>
+                <Animated.View style={[styles.InstructionBlock,Themes.bg,Themes.Container]}>
+                    <View style={[styles.ImageContainer]}>
                     <Image source = {require("../src/image/homepage_image.png")} style= {styles.Imagee}></Image>
-                    <View style = {[styles.InstructionInsideBlock,Themes.bg]}>
+                    </View>
+                    <View style = {[styles.InstructionInsideBlock]}>
                     <Text style = {styles.InstructionTitle}>Start</Text>
                     <Text style = {[styles.InstructionDescription,Themes.Text]}>Start by clicking on the start button or use text command</Text>
                     </View>
                 </Animated.View>
-                <Animated.View style={[styles.InstructionBlock,SecondInstructAnimation,Themes.Container]}>
+                </Animated.View>
+
+
+                <Animated.View style={[styles.TestView,,SecondInstructAnimation]}>
+                <Animated.View style={[styles.InstructionBlock,Themes.Container]}>
+                <View style={[styles.ImageContainer]}>
                     <Image source = {require("../src/image/homepage_image.png")} style= {styles.Imagee}></Image>
+                </View>
                     <View style = {[styles.InstructionInsideBlock,Themes.bg]}>
                     <Text style = {styles.InstructionTitle}>Scan</Text>
                     <Text style = {[styles.InstructionDescription,Themes.Text]}>Take a picture of the covid test by placing it in the middle of the camera</Text>
                     </View>
                 </Animated.View>
-                <Animated.View style={[styles.InstructionBlock,ThirdInstructAnimation,Themes.Container]}>
+                </Animated.View>
+
+                <Animated.View style={[styles.TestView,ThirdInstructAnimation]}>
+                <Animated.View style={[styles.InstructionBlock,Themes.Container]}>
+                <View style={[styles.ImageContainer]}>
                     <Image source = {require("../src/image/homepage_image.png")} style= {styles.Imagee}></Image>
+                </View>
                     <View style = {[styles.InstructionInsideBlock,Themes.bg]}>
                     <Text style = {styles.InstructionTitle}>Analyse</Text>
                     <Text style = {[styles.InstructionDescription,Themes.Text]}>The system will analyse and indicate the result of the test</Text>
                     </View>
                 </Animated.View>
-            </Animated.View>
+                </Animated.View>
 
             <Animated.View style = {[styles.Pressable,buttonAnimation]} >  
             <Pressable  onPress={()=>stateTrigger()}  asChild>
@@ -200,7 +215,7 @@ const Home = () =>{
             </Animated.View>
 
             
-            <Animated.View style={[styles.CameraPermissionView,NoticeAnimation]}>
+            {/* <Animated.View style={[styles.CameraPermissionView,NoticeAnimation]}>
                 <Text style={[styles.Welcome, {color : "#7AA8AE"}]}>Notice !</Text>
                 <Animated.View style = {[styles.NoticeText]}>
                     <Text style ={[styles.InstructionDescription,{margin : 40},{textAlign: "center"}]}>This appliction needs Camera permission</Text>
@@ -208,7 +223,7 @@ const Home = () =>{
                         <Text style = {[styles.Button,{fontSize:20}]}>Permit</Text>
                     </Pressable>
                 </Animated.View>
-            </Animated.View>
+            </Animated.View> */}
             
             </GestureHandlerRootView>
             
