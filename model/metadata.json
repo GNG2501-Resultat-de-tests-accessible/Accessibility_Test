@@ -1,1 +1,1 @@
-{"tfjsVersion":"1.3.1","tmVersion":"2.4.7","packageVersion":"0.8.4-alpha2","packageName":"@teachablemachine/image","timeStamp":"2023-11-26T21:17:52.639Z","userMetadata":{},"modelName":"FinalCOVIDModel","labels":["Positive COV...","Negative COV...","Inconclusive..."],"imageSize":224}
+{"tfjsVersion":"1.3.1","tmVersion":"2.4.7","packageVersion":"0.8.4-alpha2","packageName":"@teachablemachine/image","timeStamp":"2023-11-28T22:56:06.185Z","userMetadata":{},"modelName":"BestModelEver","labels":["Positive COVID Test","Negative COVID Test"],"imageSize":224}

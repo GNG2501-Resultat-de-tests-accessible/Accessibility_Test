@@ -118,7 +118,9 @@ export default function Scan() {
 					ref={cameraRef}
 					type={type}
 					style={styles.cameraStyle}
-					focusDepth={1}
+					autoFocus={true}
+					flashMode={true}
+					focusDepth={0}
 				>
 					<View style={{ flex: 1, backgroundColor: "transparent" }} />
 				</Camera>
