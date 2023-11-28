@@ -9,7 +9,7 @@ export default function ImageViewer({ imageSource }) {
 			style={{
 				...styles.image,
 				width: screenWidth * 0.7,
-				height: screenHeight * 0.3,
+				height: screenHeight * 0.4,
 			}}
 		/>
 	);
