@@ -92,7 +92,7 @@ export default function HomeScreen() {
             opacity:numInstruction==1?withTiming(1):withTiming(0),
             transform:[
                 {
-                translateY : numInstruction==2? withTiming(-800) : numInstruction==1?withTiming(-screenHeight*0.55,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0),
+                translateY : numInstruction==2? withTiming(-800) : numInstruction==1?withTiming(-screenHeight*0.6,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0),
                 }
             ]
         }
@@ -104,7 +104,7 @@ export default function HomeScreen() {
             opacity:numInstruction==2?withTiming(1):withTiming(0),
             transform:[
                 {
-                translateY : numInstruction==3? withTiming(-900) : numInstruction==2?withTiming(-screenHeight*0.55,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0),
+                translateY : numInstruction==3? withTiming(-900) : numInstruction==2?withTiming(-screenHeight*0.6,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0),
                 }
             ]
         }
@@ -115,7 +115,7 @@ export default function HomeScreen() {
             opacity:numInstruction==3?withTiming(1):withTiming(0),
             transform:[
                 {
-                translateY : numInstruction==4? withTiming(-900) : numInstruction==3?withTiming(-screenHeight*0.55,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0),
+                translateY : numInstruction==4? withTiming(-900) : numInstruction==3?withTiming(-screenHeight*0.6,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0),
                 }
             ]
         }
@@ -166,7 +166,7 @@ export default function HomeScreen() {
 					<Animated.View style={[styles.mainContainer,fadingupAnimation]}>
 					<Text style={[styles.text, themeTextStyle, styles.welcomeText]}>
 						Welcome!
-						Welcome!
+
 					</Text>
 					<View style={styles.imageContainer}>
 						<ImageViewer
