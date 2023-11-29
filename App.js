@@ -31,6 +31,7 @@ export default function App() {
 		SplashScreen.hideAsync(); //Hide SplashScreen when fonts are loaded
 	}
 
+	
 
 	const headerStyle = {
 		backgroundColor: colorScheme === "light" ? "#fff" : "#231f26",

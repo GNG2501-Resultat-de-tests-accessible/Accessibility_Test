@@ -166,6 +166,7 @@ export default function HomeScreen() {
 					<Animated.View style={[styles.mainContainer,fadingupAnimation]}>
 					<Text style={[styles.text, themeTextStyle, styles.welcomeText]}>
 						Welcome!
+						Welcome!
 					</Text>
 					<View style={styles.imageContainer}>
 						<ImageViewer
@@ -173,7 +174,7 @@ export default function HomeScreen() {
 						/>
 					</View>
 					<Text style={[styles.text, themeTextStyle]}>
-						Double-Tap Or Click On Start
+						Double Tap Or Click on Next
 					</Text>
 					</Animated.View>
 
@@ -185,8 +186,8 @@ export default function HomeScreen() {
                     <Image source = {require("../assets/homepage_image.png")} style={styles.ImageInstruction} /> 
                     </View>
                     <View style = {[styles.InstructionInsideBlock]}>
-                    <Text style = {styles.InstructionTitle}>To Get Started</Text>
-                    <Text style = {[styles.InstructionDescription,themeTextStyle]}>Start by clicking the Start button (at the buttom center of the screen) or Double-Tap your screen.</Text>
+                    <Text style = {styles.InstructionTitle}>Start</Text>
+                    <Text style = {[styles.InstructionDescription,themeTextStyle]}>Start by clicking on the start button or use text command</Text>
                     </View>
                 </View>
                 </Animated.View>
@@ -222,8 +223,7 @@ export default function HomeScreen() {
 				{/* Pressable Interaction */}
 				<Animated.View style = {[styles.Pressable,pressableAnimation]} >  
             		<Pressable  onPress={()=>stateTrigger()}  asChild>
-						{/* Start button text */}
-                    	<Text style={styles.PressableText}>Start</Text> 
+                    	<Text style={styles.PressableText}>Start</Text>
             		</Pressable>
             	</Animated.View>
 
@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
 		alignSelf: "center"
 	},
 	welcomeText: {
-		fontSize: normalize(35),
+		fontSize: normalize(30),
 		alignSelf: "center",
 		fontFamily : "pBold",
 		marginTop: screenHeight*0.11 //Welcome text container vertical alignment
@@ -295,13 +295,18 @@ const styles = StyleSheet.create({
 		alignSelf: 'center'
 	},
 
+
+
+
+
+
 	//Instructions Block Styling (I know It's seems spaguetti Code but I tried to simplify it lol)
 	InstructionView : {
 		opacity: 0,
 		alignSelf:"center",
 		position:"absolute",
 		alignItems: "center",
-		top: screenHeight*1, //1.1
+		top: screenHeight*1.1, //1.1
 		borderRadius:15,
 		width: screenWidth*0.6,
 		height: screenHeight*0.3,
@@ -324,7 +329,7 @@ const styles = StyleSheet.create({
 
 		alignItems: "center",
 		margin:10,
-		fontSize: normalize(13),
+		fontSize: normalize(12),
 		fontFamily: "pMedium",
 		color: "#ffffff",
 	},
@@ -366,13 +371,13 @@ const styles = StyleSheet.create({
 		justifyContent: "center", //Align the text horizentally
 		textAlign: "center",
 		alignSelf: "center", //Scan button allign
-		width: screenWidth * 0.8, // 80% of the screen width for Start button background
-		height: screenHeight * 0.1, // 10% of the screen height for Start button background
+		width: screenWidth * 0.8, // 80% of the screen width
+		height: screenHeight * 0.08, // 10% of the screen height
 	},
 	PressableText: {
 		color: "#FFFFFF",
 		textAlign: "center",
 		fontFamily: "pBold",
-		fontSize: 45, //Scan button text size
+		fontSize: 35, //Scan button text size
 	},
 });
