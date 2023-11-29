@@ -6,10 +6,15 @@ import {
 	useColorScheme,
 	SafeAreaView,
 	TouchableOpacity,
+	Dimensions
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { normalize } from "../utils/utils";
 import ImageViewer from "./ImageViewer";
+
+//Get the width and height of the screen:
+const screenWidth = Dimensions.get("window").width; // Screen Width
+const screenHeight = Dimensions.get("window").height; // Screen Height
 
 export default function Result({ route }) {
 	const { result } = route.params;
@@ -43,6 +48,8 @@ export default function Result({ route }) {
 		>
 			<View style={[styles.container, themeContainerStyle]}>
 				<SafeAreaView style={styles.iosSafeArea}>
+					<Text style={styles.ResultText}>Result :</Text>
+					<View style={styles.Container}>
 					<Text style={[styles.text, themeTextStyle, styles.welcomeText]}>
 						This is a {result}
 					</Text>
@@ -52,6 +59,7 @@ export default function Result({ route }) {
 					<Text style={[styles.text, themeTextStyle]}>
 						Please tap and retake the picture!
 					</Text>
+					</View>
 					<StatusBar style='auto' />
 				</SafeAreaView>
 			</View>
@@ -83,12 +91,26 @@ const styles = StyleSheet.create({
 	},
 	text: {
 		fontSize: normalize(20),
-		fontWeight: "bold",
+		fontFamily: "pMedium",
 		textAlign: "center",
 	},
 	welcomeText: {
-		fontSize: normalize(40),
-		fontWeight: "bold",
+		fontSize: normalize(30),
+		fontFamily: "pMedium"
 	},
 	touchableOpacityStyle: { flex: 1 },
+	ResultText : {
+        fontFamily: 'pBold',
+        fontSize: normalize(35),
+        color: '#7AA8AE',
+		marginTop: screenHeight*0.07
+        
+    },
+	Container :{
+		alignItems: "center",
+		backgroundColor: "#1a171c",
+		borderRadius: 25,
+		width: screenWidth*0.9,
+		height: screenHeight*0.75
+	}
 });

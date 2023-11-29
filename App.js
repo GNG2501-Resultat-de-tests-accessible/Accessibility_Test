@@ -7,6 +7,7 @@ import { useCallback, useEffect } from "react";
 import Scan from "./components/Scanpage";
 import HomeScreen from "./components/HomeScreen";
 import Result from "./components/ResultPage";
+import Instruction from "./components/Instructions";
 
 const Stack = createStackNavigator();
 
@@ -46,6 +47,7 @@ export default function App() {
 						title: "Home",
 						headerStyle,
 						headerTintColor,
+						headerShown: false
 					}}
 				/>
 				<Stack.Screen
@@ -66,6 +68,16 @@ export default function App() {
 						headerTintColor,
 					}}
 				/>
+				<Stack.Screen
+					name='Instruction'
+					component={Instruction}
+					options={{
+						title: "Instruction",
+						headerStyle,
+						headerTintColor,
+					}}
+				/>
+				
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

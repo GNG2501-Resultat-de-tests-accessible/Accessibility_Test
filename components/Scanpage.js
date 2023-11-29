@@ -6,6 +6,7 @@ import {
 	StyleSheet,
 	ActivityIndicator,
 	Modal,
+	Dimensions
 } from "react-native";
 import { Camera, CameraType } from "expo-camera";
 import { Image, useColorScheme } from "react-native";
@@ -25,6 +26,10 @@ const RESULT_MAPPING = [
 	"Negative COVID Test",
 	"Inconclusive COVID Test",
 ];
+
+//Get the width and height of the screen:
+const screenWidth = Dimensions.get("window").width; // Screen Width
+const screenHeight = Dimensions.get("window").height; // Screen Height
 
 export default function Scan() {
 	const navigation = useNavigation();
@@ -99,6 +104,20 @@ export default function Scan() {
 			</View>
 		);
 	}
+
+
+	//Double Tap Handler:
+	let lastpress = 0; // last time tap
+    const DoubleTap = () =>{                    //DoubleTap function that detects double press in the middle of the screen
+        const time = new Date().getTime(); //Get Time Press
+        const delta = time - lastpress;
+        const delay = 400; //Press Delay
+        if (delta < delay) {
+            console.log("doubleTap");
+            handleImageCapture();
+        }
+        lastpress = time;
+    }
 	return (
 		<View style={[styles.container, themeContainerStyle]}>
 			<Modal animationType='slide' transparent={true} visible={loading}>
@@ -111,7 +130,7 @@ export default function Scan() {
 			</Modal>
 			<TouchableOpacity
 				style={{ flex: 1 }}
-				onPress={handleImageCapture}
+				onPress={DoubleTap}
 				activeOpacity={1.0}
 			>
 				<Camera
