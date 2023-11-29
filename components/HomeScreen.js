@@ -69,10 +69,10 @@ export default function HomeScreen() {
 			onPress={DoubleTap}
 		>
 			<View style={[styles.container, themeContainerStyle]}  >
-			{/*<Text style={styles.Title}>ACCESS-19</Text>*/}
 				<SafeAreaView style={styles.iosSafeArea}>
+					<Text style={styles.Title}>Test Access</Text>
 					<Text style={[styles.text, themeTextStyle, styles.welcomeText]}>
-						Welcome To ACCESS-19!
+						Welcome!
 					</Text>
 					<View style={styles.imageContainer}>
 						<ImageViewer
@@ -80,7 +80,7 @@ export default function HomeScreen() {
 						/>
 					</View>
 					<Text style={[styles.text, themeTextStyle]}>
-						Double-Tap Or Click On Start
+						Double Tap Or Click on Next
 					</Text>
 
 				
@@ -92,8 +92,8 @@ export default function HomeScreen() {
                     <Image source = {require("../assets/homepage_image.png")} style={styles.ImageInstruction} /> 
                     </View>
                     <View style = {[styles.InstructionInsideBlock]}>
-                    <Text style = {styles.InstructionTitle}>To Get Started</Text>
-                    <Text style = {[styles.InstructionDescription,themeTextStyle]}>Start by clicking the Start button (at the buttom center of the screen) or Double-Tap your screen.</Text>
+                    <Text style = {styles.InstructionTitle}>Start</Text>
+                    <Text style = {[styles.InstructionDescription,themeTextStyle]}>Start by clicking on the start button or use text command</Text>
                     </View>
                 </View>
                 </View>
@@ -104,8 +104,7 @@ export default function HomeScreen() {
 				{/* Pressable Interaction */}
 				<View style = {[styles.Pressable]} >  
             		<Pressable  onPress={()=>stateTrigger()}  asChild>
-						{/* Start button text */}
-                    	<Text style={styles.PressableText}>Start</Text> 
+                    	<Text style={styles.PressableText}>Start</Text>
             		</Pressable>
             	</View>
 
@@ -144,32 +143,36 @@ const styles = StyleSheet.create({
 		alignSelf: "center"
 	},
 	welcomeText: {
-		fontSize: normalize(35),
+		fontSize: normalize(30),
 		alignSelf: "center",
 		fontFamily : "pBold",
-		marginTop: screenHeight*0.09 //Welcome text container vertical alignment
+		marginTop: screenHeight*0.03
 
 	},
 	touchableOpacityStyle: { flex: 1 },
 
 	Title : {
 		fontFamily: "pBold",
-		fontSize: normalize(30),
+		fontSize: normalize(26),
 		zIndex:0,
 		color: "#7AA8AE",
-		margin : 20,
-		textAlign: "center",
+		margin : 20
 	},
 	imageContainer : {
 		alignSelf: 'center'
 	},
+
+
+
+
+
 
 	//Instructions Block Styling (I know It's seems spaguetti Code but I tried to simplify it lol)
 	InstructionView : {
 		alignSelf:"center",
 		position:"absolute",
 		alignItems: "center",
-		top: screenHeight*1, //1.1
+		top: screenHeight*1.1, //1.1
 		borderRadius:15,
 		width: screenWidth*0.6,
 		height: screenHeight*0.3,
@@ -192,7 +195,7 @@ const styles = StyleSheet.create({
 
 		alignItems: "center",
 		margin:10,
-		fontSize: normalize(13),
+		fontSize: normalize(12),
 		fontFamily: "pMedium",
 		color: "#ffffff",
 	},
@@ -221,20 +224,20 @@ const styles = StyleSheet.create({
 	Pressable: {
 		//Scan button
 		backgroundColor: "#7AA8AE",
-		top: screenHeight * 0.75, //Start button vertical position
+		top: screenHeight * 0.8,
 		zIndex: 3,
 		position: "absolute", 
 		borderRadius: 20,
 		justifyContent: "center", //Align the text horizentally
 		textAlign: "center",
 		alignSelf: "center", //Scan button allign
-		width: screenWidth * 0.8, // 80% of the screen width for Start button background
-		height: screenHeight * 0.1, // 10% of the screen height for Start button background
+		width: screenWidth * 0.8, // 80% of the screen width
+		height: screenHeight * 0.08, // 10% of the screen height
 	},
 	PressableText: {
 		color: "#FFFFFF",
 		textAlign: "center",
 		fontFamily: "pBold",
-		fontSize: 45, //Scan button text size
+		fontSize: 35, //Scan button text size
 	},
 });
