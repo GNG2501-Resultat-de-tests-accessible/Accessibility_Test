@@ -92,7 +92,7 @@ export default function HomeScreen() {
             opacity:numInstruction==1?withTiming(1):withTiming(0),
             transform:[
                 {
-                translateY : numInstruction==2? withTiming(-800) : numInstruction==1?withTiming(-screenHeight*0.6,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0),
+                translateY : numInstruction==2? withTiming(-800) : numInstruction==1?withTiming(-screenHeight*0.7,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0),
                 }
             ]
         }
@@ -104,7 +104,7 @@ export default function HomeScreen() {
             opacity:numInstruction==2?withTiming(1):withTiming(0),
             transform:[
                 {
-                translateY : numInstruction==3? withTiming(-900) : numInstruction==2?withTiming(-screenHeight*0.6,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0),
+                translateY : numInstruction==3? withTiming(-900) : numInstruction==2?withTiming(-screenHeight*0.7,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0),
                 }
             ]
         }
@@ -115,7 +115,7 @@ export default function HomeScreen() {
             opacity:numInstruction==3?withTiming(1):withTiming(0),
             transform:[
                 {
-                translateY : numInstruction==4? withTiming(-900) : numInstruction==3?withTiming(-screenHeight*0.6,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0),
+                translateY : numInstruction==4? withTiming(-900) : numInstruction==3?withTiming(-screenHeight*0.7,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0),
                 }
             ]
         }
@@ -138,7 +138,6 @@ export default function HomeScreen() {
 	//Pressable Animation When Its start Animation
 	const pressableAnimation = useAnimatedStyle(() =>{
         return{
-            backgroundColor: isActive? withTiming('rgba(52, 52, 52, 0.8)',{duration:400, easing:Easing.inOut(Easing.quad)}): withTiming("#7AA8AE"),
             transform: [
                 {
                     translateY: isActive? withTiming(-screenHeight*0.2,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0)
@@ -159,7 +158,7 @@ export default function HomeScreen() {
 				<View style = {styles.titleContainer}>
 				<Text style={styles.Title}>Access-19</Text>
 				<Pressable onPress={()=>navigation.navigate("Instruction")}>
-				<Image source={require("../assets/Exclamation.png")}  style={styles.exclamation}/>
+				<Image source={require("../assets/Exclamation.png")}  style={styles.helpButton}/>
 				</Pressable>
 				</View>
 
@@ -174,7 +173,7 @@ export default function HomeScreen() {
 						/>
 					</View>
 					<Text style={[styles.text, themeTextStyle]}>
-						Double Tap Or Click on Next
+						Double-Tap Or Click on Next
 					</Text>
 					</Animated.View>
 
@@ -257,48 +256,43 @@ const styles = StyleSheet.create({
 
 	},
 	text: {
-		fontSize: normalize(17),
+		fontSize: normalize(19),
 		fontFamily: "pMedium",
 		alignSelf: "center"
 	},
 	welcomeText: {
-		fontSize: normalize(30),
+		fontSize: normalize(34),
 		alignSelf: "center",
 		fontFamily : "pBold",
-		marginTop: screenHeight*0.11 //Welcome text container vertical alignment
+		marginTop: screenHeight*0.1 //Welcome text container vertical alignment
 
 	},
 	touchableOpacityStyle: { flex: 1 },
 
 	Title : {
 		fontFamily: "pBold",
-		fontSize: normalize(27),
+		fontSize: normalize(33),
 		zIndex:0,
 		color: "#7AA8AE",
-		margin: 25,
-		marginTop: screenHeight*0.05,
+		margin: 15,
+		marginTop: screenHeight*0.02,
 		
 	},
 	titleContainer : {
 		backgroundColor: "#151317",
-		borderRadius:20,
+		borderRadius:10,
 		flexDirection: "row",
-		justifyContent: "space-between"
+		justifyContent: "space-between" // Free space between "Access-19" and Help page
 	},
-	exclamation :{
-		margin: 20,
-		marginTop: screenHeight*0.05,
+	helpButton :{ // Top right of Home page
+		margin: 15,
+		marginTop: screenHeight*0.02,
 		width: screenWidth*0.14,
-		resizeMode: "contain"
+		resizeMode: "contain",
 	},
 	imageContainer : {
 		alignSelf: 'center'
 	},
-
-
-
-
-
 
 	//Instructions Block Styling (I know It's seems spaguetti Code but I tried to simplify it lol)
 	InstructionView : {
@@ -308,34 +302,40 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		top: screenHeight*1.1, //1.1
 		borderRadius:15,
-		width: screenWidth*0.6,
-		height: screenHeight*0.3,
+		width: screenWidth*0.65,
+		height: screenHeight*0.4,
 	},
 	InstructionBlock: {
 		flexDirection: "row",
 		alignSelf : "center",
 		borderRadius:15,
 		borderColor: "#000000",
-		borderWidth: 1
+		borderWidth: 1,
 		
 	},
 	InstructionTitle: {
-		fontSize: normalize(20),
+		fontSize: normalize(25),
 		fontFamily: "pBold",
 		alignSelf: "center",
 		color: "#7AA8AE",
+		margin: 5,
 	},
 	InstructionDescription: {
 
 		alignItems: "center",
-		margin:10,
-		fontSize: normalize(12),
+		margin:0,
+		fontSize: normalize(15),
 		fontFamily: "pMedium",
 		color: "#ffffff",
+		marginLeft: 10,
+		marginRight: 10,
+
 	},
 	ImageContainer : {
 		width:screenWidth*0.3,
 		height:screenHeight*0.2,
+		marginRight: 5,
+		marginLeft: 5,
 		alignContent:"center",
 		justifyContent:"center",
 	},
@@ -356,28 +356,26 @@ const styles = StyleSheet.create({
 	mainContainer : {
 		justifyContent: "center",
 		
-
 	},
-
 
 	//Pressable Style
 	Pressable: {
 		//Scan button
 		backgroundColor: "#7AA8AE",
-		top: screenHeight * 0.9,
+		top: screenHeight * 0.87,
 		zIndex: 3,
 		position: "absolute", 
 		borderRadius: 20,
 		justifyContent: "center", //Align the text horizentally
 		textAlign: "center",
 		alignSelf: "center", //Scan button allign
-		width: screenWidth * 0.8, // 80% of the screen width
-		height: screenHeight * 0.08, // 10% of the screen height
+		width: screenWidth*0.92, // 92% of the screen width
+		height: screenHeight * 0.11, // 11% of the screen height
 	},
 	PressableText: {
 		color: "#FFFFFF",
 		textAlign: "center",
 		fontFamily: "pBold",
-		fontSize: 35, //Scan button text size
+		fontSize: 40, //Scan button text size
 	},
 });
