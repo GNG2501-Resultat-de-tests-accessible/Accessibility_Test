@@ -50,7 +50,7 @@ export default function Result({ route }) {
 						<ImageViewer imageSource={resultImage} />
 					</View>
 					<Text style={[styles.text, themeTextStyle]}>
-						Please tap and retake the picture!
+						You can tap anywhere to scan again!
 					</Text>
 					<StatusBar style='auto' />
 				</SafeAreaView>
