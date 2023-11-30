@@ -6,7 +6,8 @@ import {
 	StyleSheet,
 	ActivityIndicator,
 	Modal,
-	Dimensions
+	Dimensions,
+	TouchableWithoutFeedback,
 } from "react-native";
 import { Camera, CameraType } from "expo-camera";
 import { Image, useColorScheme } from "react-native";
@@ -88,6 +89,7 @@ export default function Scan() {
 	const cameraRef = useRef();
 	const [type, setType] = useState(CameraType.back);
 	const [permission, requestPermission] = Camera.useCameraPermissions();
+	const [enter, setEnter] = useState(true);
 
 	if (!permission) {
 		// Camera permissions are still loading
@@ -105,21 +107,38 @@ export default function Scan() {
 		);
 	}
 
-
 	//Double Tap Handler:
 	let lastpress = 0; // last time tap
-    const DoubleTap = () =>{                    //DoubleTap function that detects double press in the middle of the screen
-        const time = new Date().getTime(); //Get Time Press
-        const delta = time - lastpress;
-        const delay = 400; //Press Delay
-        if (delta < delay) {
-            console.log("doubleTap");
-            handleImageCapture();
-        }
-        lastpress = time;
-    }
+	const DoubleTap = () => {
+		//DoubleTap function that detects double press in the middle of the screen
+		const time = new Date().getTime(); //Get Time Press
+		const delta = time - lastpress;
+		const delay = 400; //Press Delay
+		if (delta < delay) {
+			console.log("doubleTap");
+			handleImageCapture();
+		}
+		lastpress = time;
+	};
+
+	const handleModalDismiss = () => {
+		setEnter(false);
+	};
+
 	return (
 		<View style={[styles.container, themeContainerStyle]}>
+			<Modal animationType='slide' transparent={true} visible={enter}>
+				<TouchableWithoutFeedback onPress={handleModalDismiss}>
+					<View style={styles.centeredView}>
+						<View style={themeModalStyle}>
+							<ActivityIndicator size='large' color={themeSpinnerStyle} />
+							<Text style={themeModalTextStyle}>
+								Click on Scan or Double-Tap to Take a Picture
+							</Text>
+						</View>
+					</View>
+				</TouchableWithoutFeedback>
+			</Modal>
 			<Modal animationType='slide' transparent={true} visible={loading}>
 				<View style={styles.centeredView}>
 					<View style={themeModalStyle}>
