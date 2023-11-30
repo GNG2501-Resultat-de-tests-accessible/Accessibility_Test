@@ -41,12 +41,16 @@ export default function HomeScreen() {
         lastpress = time;
     }
 
+	//Text on The Pressable:
+	const [pressableText, setpressableText] = useState("Start");
+
 
 	//Handle States
 	function stateTrigger() {
 		if (numInstruction == 0) {
 			setIsActive(true); //Start showing the instructions
 			setNumInstruction(1); //showing the first Instruction
+			setpressableText("Next") //change the pressable text
 			
 		}
 		if (numInstruction==1) {
@@ -74,6 +78,8 @@ export default function HomeScreen() {
 		colorScheme === "light" ? styles.lightThemeText : styles.darkThemeText;
 	const themeContainerStyle =
 		colorScheme === "light" ? styles.lightContainer : styles.darkContainer;
+	const bgContainerContrast = colorScheme === "light" ? "#f2f2f2" : "#151317";
+	const bgInsideBlock = colorScheme=="light"? "#f2f2f2": "#1a1d26";
 
 	// const handleTap = () => {
 	// 	console.log("Screen Tapped");
@@ -154,10 +160,10 @@ export default function HomeScreen() {
 		>
 			<View style={[styles.container, themeContainerStyle]}  >
 				<SafeAreaView style={styles.iosSafeArea}>
-					<View style = {styles.titleContainer}>
+					<View style = {[styles.titleContainer, {backgroundColor: bgContainerContrast}]}>
 				<Text style={styles.Title}>ACCESS-19</Text>
 				<Pressable onPress={()=>navigation.navigate("Instruction")}>
-				<Image source={require("../assets/Exclamation.png")}  style={styles.helpButton}/>
+				<Image source={require("../assets/question.png")}  style={styles.helpButton}/>
 				</Pressable>
 				</View>
 
@@ -181,11 +187,11 @@ export default function HomeScreen() {
 				<Animated.View style={[styles.InstructionView,FirstInstructAnimation]}>
                 <View style={[styles.InstructionBlock,themeContainerStyle]}>
                     <View style={[styles.ImageContainer]}>
-                    <Image source = {require("../assets/homepage_image.png")} style={styles.ImageInstruction} /> 
+                    <Image source = {require("../assets/start.png")} style={styles.ImageInstruction} /> 
                     </View>
-                    <View style = {[styles.InstructionInsideBlock]}>
+                    <View style = {[styles.InstructionInsideBlock,{backgroundColor: bgInsideBlock}]}>
                     <Text style = {styles.InstructionTitle}>Start</Text>
-                    <Text style = {[styles.InstructionDescription,themeTextStyle]}>Start by clicking on the start button or use text command</Text>
+                    <Text style = {[styles.InstructionDescription,themeTextStyle]}>Start by clicking on the start button or Double Tap anywhere on the screen</Text>
                     </View>
                 </View>
                 </Animated.View>
@@ -193,11 +199,11 @@ export default function HomeScreen() {
 				<Animated.View style={[styles.InstructionView,SecondInstructAnimation]}>
                 <View style={[styles.InstructionBlock,themeContainerStyle]}>
                     <View style={[styles.ImageContainer]}>
-                    <Image source = {require("../assets/ScanningCovid.png")} style={[styles.ImageInstruction, {width: screenWidth*0.5, height: screenHeight*0.5}]} /> 
+                    <Image source = {require("../assets/scan.png")} style={[styles.ImageInstruction, {}]} /> 
                     </View>
-                    <View style = {[styles.InstructionInsideBlock]}>
+                    <View style = {[styles.InstructionInsideBlock,{backgroundColor: bgInsideBlock}]}>
                     <Text style = {styles.InstructionTitle}>Scan</Text>
-                    <Text style = {[styles.InstructionDescription,themeTextStyle]}>Take a picture of the covid test by placing it in the middle of the camera</Text>
+                    <Text style = {[styles.InstructionDescription,themeTextStyle]}>Take a picture of the covid test by pressing the scan button or Double Tap</Text>
                     </View>
                 </View>
                 </Animated.View>
@@ -205,11 +211,11 @@ export default function HomeScreen() {
 				<Animated.View style={[styles.InstructionView, ThirdInstructAnimation]}>
                 <View style={[styles.InstructionBlock,themeContainerStyle]}>
                     <View style={[styles.ImageContainer]}>
-                    <Image source = {require("../assets/Bot_Analysing.png") }style={styles.ImageInstruction} /> 
+                    <Image source = {require("../assets/analyse.png") }style={styles.ImageInstruction} /> 
                     </View>
-                    <View style = {[styles.InstructionInsideBlock]}>
+                    <View style = {[styles.InstructionInsideBlock,{backgroundColor: bgInsideBlock}]}>
                     <Text style = {styles.InstructionTitle}>Analyse</Text>
-                    <Text style = {[styles.InstructionDescription,themeTextStyle]}>The system will analyse and indicate the result of the test</Text>
+                    <Text style = {[styles.InstructionDescription,themeTextStyle]}>The system will analyse and indicate the result of the test in the next page</Text>
                     </View>
                 </View>
                 </Animated.View>
@@ -221,7 +227,7 @@ export default function HomeScreen() {
 				{/* Pressable Interaction */}
 				<Animated.View style = {[styles.Pressable,pressableAnimation]} >  
             		<Pressable  onPress={()=>stateTrigger()}  asChild>
-                    	<Text style={styles.PressableText}>Start</Text>
+                    	<Text style={styles.PressableText}>{pressableText}</Text>
             		</Pressable>
             	</Animated.View>
 
@@ -274,7 +280,7 @@ const styles = StyleSheet.create({
 		zIndex:0,
 		color: "#7AA8AE",
 		margin: 15,
-		marginTop: screenHeight*0.02,
+		marginTop: screenHeight*0.05,
 		
 	},
 	titleContainer : {
@@ -286,7 +292,7 @@ const styles = StyleSheet.create({
 	},
 	helpButton :{ // Top right of Home page
 		margin: 15,
-		marginTop: screenHeight*0.02,
+		marginTop: screenHeight*0.05,
 		width: screenWidth*0.14,
 		resizeMode: "contain",
 	},

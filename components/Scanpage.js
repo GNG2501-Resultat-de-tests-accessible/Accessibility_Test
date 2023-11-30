@@ -8,6 +8,7 @@ import {
 	Modal,
 	Dimensions,
 	TouchableWithoutFeedback,
+	Pressable
 } from "react-native";
 import { Camera, CameraType } from "expo-camera";
 import { Image, useColorScheme } from "react-native";
@@ -162,6 +163,13 @@ export default function Scan() {
 				</Camera>
 			</TouchableOpacity>
 			<StatusBar style='auto' />
+
+
+			<View style = {[styles.Pressable,]} >  
+            		<Pressable  onPress={()=>handleImageCapture()}  asChild>
+                    	<Text style={styles.PressableText}>Scan</Text>
+            		</Pressable>
+            	</View>
 		</View>
 	);
 }
@@ -250,5 +258,27 @@ const styles = StyleSheet.create({
 		marginTop: 15,
 		textAlign: "center",
 		color: "#fff",
+	},
+
+
+	//Pressable Style
+	Pressable: {
+		//Scan button
+		backgroundColor: "#7AA8AE",
+		top: screenHeight * 0.8,
+		zIndex: 3,
+		position: "absolute", 
+		borderRadius: 20,
+		justifyContent: "center", //Align the text horizentally
+		textAlign: "center",
+		alignSelf: "center", //Scan button allign
+		width: screenWidth*0.92, // 92% of the screen width
+		height: screenHeight * 0.11, // 11% of the screen height
+	},
+	PressableText: {
+		color: "#FFFFFF",
+		textAlign: "center",
+		fontFamily: "pBold",
+		fontSize: 40, //Scan button text size
 	},
 });

@@ -19,6 +19,19 @@ const screenHeight = Dimensions.get("window").height; // Screen Height
 export default function Result({ route }) {
 	const { result } = route.params;
 
+	//Double Tap Handler:
+	let lastpress = 0; // last time tap
+    const DoubleTap = () =>{                    //DoubleTap function that detects double press in the middle of the screen
+        const time = new Date().getTime(); //Get Time Press
+        const delta = time - lastpress;
+        const delay = 400; //Press Delay
+        if (delta < delay) {
+            console.log("doubleTap");
+            navigation.navigate("Scan")
+        }
+        lastpress = time;
+    }
+
 	let resultImage;
 	if (result === "Positive COVID Test") {
 		resultImage = require("../assets/positive.png");
@@ -44,7 +57,7 @@ export default function Result({ route }) {
 		<TouchableOpacity
 			style={styles.touchableOpacityStyle}
 			activeOpacity={1.0}
-			onPress={handleTap}
+			onPress={DoubleTap}
 		>
 			<SafeAreaView style={[styles.container, themeContainerStyle]}>
 				<View style={styles.iosSafeArea}>
@@ -56,7 +69,7 @@ export default function Result({ route }) {
 						<ImageViewer imageSource={resultImage} />
 					</View>
 					<Text style={[styles.text, themeTextStyle]}>
-						Please tap to retake the picture!
+						 Double tap to retake a picture!
 					</Text>
 					<StatusBar style='auto' />
 				
@@ -87,11 +100,13 @@ const styles = StyleSheet.create({
 	iosSafeArea: {
 		flex: 1,
 		alignItems: "center",
+		justifyContent:"center"
 	},
 	text: {
 		fontSize: normalize(20),
 		fontFamily: "pMedium",
 		textAlign: "center",
+		margin: 20
 	},
 	welcomeText: {
 		fontSize: normalize(30),
