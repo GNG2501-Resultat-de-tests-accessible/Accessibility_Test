@@ -131,9 +131,9 @@ export default function Scan() {
 				<TouchableWithoutFeedback onPress={handleModalDismiss}>
 					<View style={styles.centeredView}>
 						<View style={themeModalStyle}>
-							<ActivityIndicator size='large' color={themeSpinnerStyle} />
 							<Text style={themeModalTextStyle}>
-								Click on Scan or Double-Tap to Take a Picture
+								Hover your Phone over the COVID Test and Double-Tap to Take a
+								Picture
 							</Text>
 						</View>
 					</View>
