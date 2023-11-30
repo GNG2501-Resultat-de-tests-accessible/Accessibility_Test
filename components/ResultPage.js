@@ -48,9 +48,7 @@ export default function Result({ route }) {
 		>
 			<SafeAreaView style={[styles.container, themeContainerStyle]}>
 				<View style={styles.iosSafeArea}>
-					<View >
-						<Text style={styles.ResultText}>Result :</Text>
-					</View>
+					
 					<Text style={[styles.text, themeTextStyle, styles.welcomeText]}>
 						This is a {result}
 					</Text>
@@ -58,7 +56,7 @@ export default function Result({ route }) {
 						<ImageViewer imageSource={resultImage} />
 					</View>
 					<Text style={[styles.text, themeTextStyle]}>
-						Please tap and retake the picture!
+						Please tap to retake the picture!
 					</Text>
 					<StatusBar style='auto' />
 				
@@ -105,14 +103,13 @@ const styles = StyleSheet.create({
         fontSize: normalize(35),
         color: '#7AA8AE',
 		marginTop: screenHeight*0.07,
-		backgroundColor: "#1a171c",
         
     },
 	Container :{
 		alignItems: "center",
 		backgroundColor: "#1a171c",
 		borderRadius: 25,
-		width: screenWidth*0.9,
-		height: screenHeight*0.75
+		width: screenWidth*0.5,
+		height: screenHeight*0.2
 	}
 });
