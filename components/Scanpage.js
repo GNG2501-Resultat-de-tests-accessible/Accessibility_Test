@@ -132,7 +132,7 @@ export default function Scan() {
 					<View style={styles.centeredView}>
 						<View style={themeModalStyle}>
 							<Text style={themeModalTextStyle}>
-								Hover your Phone over the COVID Test and Double-Tap to Take a
+								Hover Your Phone Over The COVID Test And Double-Tap To Take A
 								Picture
 							</Text>
 						</View>
