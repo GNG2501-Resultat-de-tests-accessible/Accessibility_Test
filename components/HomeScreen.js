@@ -135,12 +135,12 @@ export default function HomeScreen() {
     })
 
 
-	//Pressable Animation When Its start Animation
+	// Stat Button in Instruction Animation
 	const pressableAnimation = useAnimatedStyle(() =>{
         return{
             transform: [
                 {
-                    translateY: isActive? withTiming(-screenHeight*0.2,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0)
+                    translateY: isActive? withTiming(-screenHeight*0.18,{duration:400, easing:Easing.inOut(Easing.quad)}):withTiming(0)
                 }
             ]
         }
@@ -154,9 +154,8 @@ export default function HomeScreen() {
 		>
 			<View style={[styles.container, themeContainerStyle]}  >
 				<SafeAreaView style={styles.iosSafeArea}>
-
-				<View style = {styles.titleContainer}>
-				<Text style={styles.Title}>Access-19</Text>
+					<View style = {styles.titleContainer}>
+				<Text style={styles.Title}>ACCESS-19</Text>
 				<Pressable onPress={()=>navigation.navigate("Instruction")}>
 				<Image source={require("../assets/Exclamation.png")}  style={styles.helpButton}/>
 				</Pressable>
@@ -256,7 +255,7 @@ const styles = StyleSheet.create({
 
 	},
 	text: {
-		fontSize: normalize(19),
+		fontSize: normalize(20),
 		fontFamily: "pMedium",
 		alignSelf: "center"
 	},
@@ -264,7 +263,7 @@ const styles = StyleSheet.create({
 		fontSize: normalize(34),
 		alignSelf: "center",
 		fontFamily : "pBold",
-		marginTop: screenHeight*0.1 //Welcome text container vertical alignment
+		marginTop: screenHeight*0.095 //Welcome text container vertical alignment
 
 	},
 	touchableOpacityStyle: { flex: 1 },
@@ -279,6 +278,7 @@ const styles = StyleSheet.create({
 		
 	},
 	titleContainer : {
+		flex: 0,
 		backgroundColor: "#151317",
 		borderRadius:10,
 		flexDirection: "row",

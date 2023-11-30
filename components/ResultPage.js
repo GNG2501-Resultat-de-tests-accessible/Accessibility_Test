@@ -46,10 +46,11 @@ export default function Result({ route }) {
 			activeOpacity={1.0}
 			onPress={handleTap}
 		>
-			<View style={[styles.container, themeContainerStyle]}>
-				<SafeAreaView style={styles.iosSafeArea}>
-					<Text style={styles.ResultText}>Result :</Text>
-					<View style={styles.Container}>
+			<SafeAreaView style={[styles.container, themeContainerStyle]}>
+				<View style={styles.iosSafeArea}>
+					<View >
+						<Text style={styles.ResultText}>Result :</Text>
+					</View>
 					<Text style={[styles.text, themeTextStyle, styles.welcomeText]}>
 						This is a {result}
 					</Text>
@@ -59,10 +60,10 @@ export default function Result({ route }) {
 					<Text style={[styles.text, themeTextStyle]}>
 						Please tap and retake the picture!
 					</Text>
-					</View>
 					<StatusBar style='auto' />
-				</SafeAreaView>
-			</View>
+				
+				</View>
+			</SafeAreaView>
 		</TouchableOpacity>
 	);
 }
@@ -103,7 +104,8 @@ const styles = StyleSheet.create({
         fontFamily: 'pBold',
         fontSize: normalize(35),
         color: '#7AA8AE',
-		marginTop: screenHeight*0.07
+		marginTop: screenHeight*0.07,
+		backgroundColor: "#1a171c",
         
     },
 	Container :{
