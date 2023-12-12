@@ -14,7 +14,7 @@ The User Interface focus on simplicity with an easy to navigate pages: (some exa
 
 # Test application:
 
-For testing, donwload the Expogo app for Android/Ios then:
+For testing, donwload the Expo Go app for Android/iOS then:
 
 1. Clone the repo
    ```sh
